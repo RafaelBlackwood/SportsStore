@@ -727,6 +727,15 @@ function buildServer(config = createConfig()) {
 function start() {
   const config = createConfig();
   const server = buildServer(config);
+  server.on("error", (error) => {
+    if (error.code === "EADDRINUSE") {
+      console.error(`Port ${config.port} is already in use.`);
+      console.error(`Stop the existing server or run this app on another port: $env:PORT=3001; npm start`);
+      process.exit(1);
+    }
+    console.error(error);
+    process.exit(1);
+  });
   server.listen(config.port, () => {
     console.log(`RSPort store running at http://localhost:${config.port}`);
     if (!paymentsConfigured(config)) {
