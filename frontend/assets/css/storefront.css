@@ -53,3 +53,437 @@
 .rsport-inline-action {
     cursor: pointer;
 }
+
+:root {
+    --rsport-ink: #101417;
+    --rsport-ink-soft: #243039;
+    --rsport-surface: #ffffff;
+    --rsport-page: #f5f7f4;
+    --rsport-line: #dfe6df;
+    --rsport-muted: #64716b;
+    --rsport-green: #18a874;
+    --rsport-blue: #2176d2;
+    --rsport-coral: #ff6848;
+    --rsport-gold: #f4b63f;
+    --rsport-shadow: 0 18px 45px rgba(16, 20, 23, 0.12);
+}
+
+body {
+    background: var(--rsport-page);
+    color: var(--rsport-ink);
+}
+
+a,
+.main_menu nav > ul > li > a,
+.footer_menu ul li a,
+.breadcrumb_content ul li a {
+    color: var(--rsport-ink);
+    transition: color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+a:hover,
+.main_menu nav > ul > li > a:hover,
+.main_menu nav > ul > li > a.active,
+.footer_menu ul li a:hover,
+.breadcrumb_content ul li a:hover {
+    color: var(--rsport-green);
+}
+
+.header_top,
+.main_header.header_defult,
+.mobile-header {
+    background: var(--rsport-ink) !important;
+}
+
+.header_top .search_box input {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.header_top .search_box input::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.search_box button,
+.main_menu_area,
+.main_menu nav > ul > li > a.active,
+.main_menu nav > ul > li > a:hover,
+.button,
+button,
+.cart_submit button,
+.coupon_inner button,
+.login_submit button,
+.order_button button,
+.checkout_btn a,
+.btn_more a,
+.pagination ul li.current,
+.pagination ul li a:hover {
+    background: var(--rsport-green) !important;
+    border-color: var(--rsport-green) !important;
+    color: #fff !important;
+}
+
+.button:hover,
+button:hover,
+.cart_submit button:hover,
+.coupon_inner button:hover,
+.login_submit button:hover,
+.order_button button:hover,
+.checkout_btn a:hover,
+.btn_more a:hover {
+    background: var(--rsport-blue) !important;
+    border-color: var(--rsport-blue) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(33, 118, 210, 0.22);
+}
+
+.breadcrumbs_area {
+    background: #edf2ed;
+    border-bottom: 1px solid var(--rsport-line);
+}
+
+.slider_section {
+    margin-top: 0 !important;
+}
+
+.slider_s_four .single_slider {
+    min-height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider_s_four .single_slider::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(16, 20, 23, 0.56), rgba(16, 20, 23, 0.08));
+    pointer-events: none;
+}
+
+.slider_c_four {
+    position: relative;
+    z-index: 1;
+    margin-left: 8%;
+    max-width: 620px;
+    animation: rsportFadeUp 700ms ease both;
+}
+
+.slider_c_four h1 {
+    color: var(--rsport-gold);
+    letter-spacing: 0;
+    font-size: 18px;
+    margin-bottom: 14px;
+}
+
+.slider_c_four h2 {
+    background: transparent;
+    color: #fff;
+    font-weight: 900;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+    padding: 0;
+    text-transform: none;
+}
+
+.slider_c_four p {
+    max-width: 520px;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: none;
+}
+
+.slider_area .owl-nav button,
+.blog_column3 .owl-nav button {
+    background: rgba(16, 20, 23, 0.78) !important;
+    color: #fff !important;
+    border-radius: 50%;
+}
+
+.categories_menu {
+    background: var(--rsport-surface);
+    border: 1px solid var(--rsport-line);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--rsport-shadow);
+}
+
+.categories_title {
+    background: linear-gradient(135deg, var(--rsport-ink), var(--rsport-ink-soft)) !important;
+    padding: 22px 24px !important;
+}
+
+.categories_title::before,
+.categories_title .categori_toggle::before,
+.categories_menu_toggle ul li.menu_item_children > a::before,
+.categories_menu_toggle ul li.menu_item_children > a::after,
+.categories_menu_toggle ul li.has-sub > a::before,
+.categories_menu_toggle ul li.has-sub > a::after,
+.categories_menu_toggle .expand {
+    display: none !important;
+}
+
+.categories_title h2 {
+    color: #fff !important;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+
+.categories_menu_toggle {
+    display: block !important;
+    background: var(--rsport-surface) !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.rsport-category-list {
+    padding: 12px !important;
+}
+
+.rsport-category-list li {
+    border: 0 !important;
+}
+
+.rsport-category-link {
+    display: block !important;
+    padding: 14px 14px !important;
+    color: var(--rsport-ink) !important;
+    border-radius: 6px;
+}
+
+.rsport-category-link span {
+    display: block;
+    font-weight: 800;
+}
+
+.rsport-category-link small {
+    display: block;
+    margin-top: 4px;
+    color: var(--rsport-muted);
+    font-size: 12px;
+}
+
+.rsport-category-link:hover {
+    background: #eaf7f1 !important;
+    color: var(--rsport-green) !important;
+}
+
+.single_product,
+.single_blog,
+.account_form,
+.coupon_code,
+.table_desc,
+.rsport-payment-box {
+    background: var(--rsport-surface);
+    border: 1px solid var(--rsport-line);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(16, 20, 23, 0.06);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.single_product:hover,
+.single_blog:hover,
+.account_form:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--rsport-shadow);
+    border-color: rgba(24, 168, 116, 0.38);
+}
+
+.product_thumb img,
+.blog_thumb img,
+.banner_thumb img {
+    transition: transform 220ms ease, filter 220ms ease;
+}
+
+.single_product:hover .product_thumb img,
+.single_blog:hover .blog_thumb img,
+.single_banner:hover .banner_thumb img {
+    transform: scale(1.035);
+    filter: saturate(1.08);
+}
+
+.current_price,
+.price_box .current_price {
+    color: var(--rsport-green) !important;
+}
+
+.old_price {
+    color: var(--rsport-muted) !important;
+}
+
+.product_name a,
+.post_title a {
+    color: var(--rsport-ink);
+    font-weight: 800;
+}
+
+.product_name a:hover,
+.post_title a:hover {
+    color: var(--rsport-green);
+}
+
+.blog_section .section_title h2,
+.section_title h2,
+.blog_header h1,
+.customer_login h2 {
+    color: var(--rsport-ink);
+    font-style: normal;
+    letter-spacing: 0;
+}
+
+.post_desc,
+.product_desc p,
+.footer_contact p,
+.footer_menu ul li a,
+.dashboard_content p {
+    color: var(--rsport-muted);
+}
+
+.footer_widgets,
+.footer_top {
+    background: var(--rsport-ink) !important;
+}
+
+.footer_widgets h3,
+.footer_contact p i,
+.footer_logo,
+.copyright_area p,
+.copyright_area p a {
+    color: #fff !important;
+}
+
+.footer_menu ul li a,
+.footer_contact p {
+    color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.footer_menu ul li a:hover {
+    color: var(--rsport-gold) !important;
+}
+
+.rsport-social-login {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 24px;
+}
+
+.rsport-social-login button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 46px;
+    color: var(--rsport-ink) !important;
+    background: #fff !important;
+    border: 1px solid var(--rsport-line) !important;
+    border-radius: 6px;
+    font-weight: 800;
+}
+
+.rsport-social-login span {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    background: var(--rsport-ink);
+    border-radius: 50%;
+}
+
+.rsport-social-login button:hover {
+    color: #fff !important;
+    background: var(--rsport-ink) !important;
+    border-color: var(--rsport-ink) !important;
+}
+
+.rsport-blog-hero {
+    width: 100%;
+    max-height: 430px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+.rsport-blog-detail {
+    background: #fff;
+    border: 1px solid var(--rsport-line);
+    border-radius: 8px;
+    padding: clamp(24px, 4vw, 46px);
+    box-shadow: var(--rsport-shadow);
+}
+
+.rsport-blog-detail h1 {
+    max-width: 820px;
+    margin-bottom: 18px;
+    color: var(--rsport-ink);
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+}
+
+.rsport-lead {
+    color: var(--rsport-ink-soft);
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.rsport-blog-detail p {
+    max-width: 820px;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.rsport-back-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-weight: 800;
+    color: var(--rsport-green);
+}
+
+@keyframes rsportFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .slider_section .row {
+        gap: 18px;
+    }
+
+    .categories_menu {
+        margin-bottom: 18px;
+    }
+
+    .rsport-category-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .slider_c_four {
+        margin-left: 28px;
+        margin-right: 28px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .rsport-category-list {
+        grid-template-columns: 1fr;
+    }
+
+    .slider_s_four .single_slider {
+        min-height: 380px;
+    }
+
+    .slider_c_four h2 {
+        font-size: 34px;
+    }
+
+    .account_form {
+        margin-bottom: 24px;
+    }
+}

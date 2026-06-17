@@ -10,6 +10,97 @@
     card: null
   };
 
+  var BLOG_POSTS = [
+    {
+      slug: "home-gym-setup",
+      title: "How to Build a Home Gym That You Will Actually Use",
+      image: "assets/img/blog/blog1.webp",
+      date: "12/06/2026",
+      author: "RSPort Team",
+      excerpt: "A practical guide to choosing compact equipment, planning zones, and building a training corner that stays useful after the first week.",
+      body: [
+        "A good home gym starts with the way you train, not with the biggest equipment list. Choose one strength tool, one conditioning tool, and enough floor space to move safely.",
+        "For most athletes, adjustable dumbbells, resistance bands, a mat, and a jump rope cover more sessions than oversized machines. Add heavier equipment only when your routine has clearly outgrown the basics.",
+        "Keep the space simple and visible. If your gear is easy to reach, training feels like a normal part of the day instead of a project you have to set up from zero."
+      ]
+    },
+    {
+      slug: "boxing-glove-fit",
+      title: "Boxing Glove Fit: What Beginners Usually Get Wrong",
+      image: "assets/img/blog/blog2.webp",
+      date: "08/06/2026",
+      author: "RSPort Team",
+      excerpt: "The right gloves protect your hands, help your technique, and make bag work feel cleaner from the first session.",
+      body: [
+        "Glove weight, wrist support, and hand-wrap space matter more than color or branding. If the glove shifts around when you punch, it is not doing its job.",
+        "Beginners should avoid gloves that feel painfully tight on day one. You need a secure fit, but your knuckles and wraps still need room.",
+        "For bag work and general fitness boxing, choose gloves with firm padding and a stable wrist closure. Your hands will thank you later."
+      ]
+    },
+    {
+      slug: "running-shoe-rotation",
+      title: "Why a Running Shoe Rotation Can Prevent Training Burnout",
+      image: "assets/img/blog/blog3.webp",
+      date: "01/06/2026",
+      author: "RSPort Team",
+      excerpt: "Rotating shoes is not just for elite runners. It can make daily training feel fresher and reduce repeated stress.",
+      body: [
+        "Different shoes load your feet and legs in slightly different ways. That variety can be useful when you train often.",
+        "Use a stable daily trainer for most runs, a lighter pair for faster sessions, and a recovery-friendly shoe for easy days.",
+        "You do not need a huge collection. Two well-chosen pairs are enough for most runners to feel the benefit."
+      ]
+    },
+    {
+      slug: "strength-recovery",
+      title: "Strength Training Recovery: Small Habits That Matter",
+      image: "assets/img/blog/blog4.webp",
+      date: "27/05/2026",
+      author: "RSPort Team",
+      excerpt: "Better recovery comes from repeatable basics: sleep, simple mobility, sensible progression, and enough food.",
+      body: [
+        "Recovery is not a luxury add-on. It is the part of training where your body adapts to the work you already did.",
+        "Start with sleep and load management. If every session is maximal, no supplement or gadget can rescue the plan.",
+        "Light mobility work, walking, hydration, and consistent protein intake will usually beat complicated recovery routines."
+      ]
+    },
+    {
+      slug: "gym-bag-checklist",
+      title: "The Gym Bag Checklist for After-Work Training",
+      image: "assets/img/blog/blog5.webp",
+      date: "18/05/2026",
+      author: "RSPort Team",
+      excerpt: "A simple packing system makes spontaneous training easier and keeps forgotten gear from ruining the session.",
+      body: [
+        "Pack your gym bag like a tiny training station: shoes, shirt, towel, bottle, wraps or straps, and a small recovery snack.",
+        "Keep a backup pair of socks and a spare lock in the side pocket. Those two tiny items save more sessions than people expect.",
+        "The less you have to think before training, the more likely you are to actually go."
+      ]
+    },
+    {
+      slug: "mobility-warmup",
+      title: "A Five-Minute Warmup That Makes Training Feel Better",
+      image: "assets/img/blog/blog6.webp",
+      date: "10/05/2026",
+      author: "RSPort Team",
+      excerpt: "Warmups do not need to be long. They need to prepare the joints and muscles you are about to use.",
+      body: [
+        "Start with one minute of easy movement to raise your temperature. Then pick three mobility drills that match the session.",
+        "For lower body days, use ankle rocks, hip airplanes, and bodyweight squats. For upper body days, use shoulder circles, scapular pushups, and band pull-aparts.",
+        "Finish with two light sets of the first main exercise. That bridge between warmup and work is where most sessions start to feel smooth."
+      ]
+    }
+  ];
+
+  var CATEGORY_LINKS = [
+    { label: "Boxing", href: "shop.html?category=Boxing", detail: "Gloves and fight training" },
+    { label: "Strength", href: "shop.html?category=Strength", detail: "Belts, kettlebells, racks" },
+    { label: "Footwear", href: "shop.html?category=Footwear", detail: "Training shoes and sneakers" },
+    { label: "Cardio", href: "shop.html?category=Cardio", detail: "Jump ropes and conditioning" },
+    { label: "Recovery", href: "shop.html?category=Recovery", detail: "Bands, mobility, reset gear" },
+    { label: "Apparel", href: "shop.html?category=Apparel", detail: "Performance tees and layers" },
+    { label: "Accessories", href: "shop.html?category=Accessories", detail: "Bags, wraps, bottles" }
+  ];
+
   function qs(selector, root) {
     return (root || document).querySelector(selector);
   }
@@ -92,7 +183,16 @@
     }
     var params = new URLSearchParams(window.location.search);
     var q = params.get("q");
-    var payload = await api("/api/products" + (q ? "?q=" + encodeURIComponent(q) : ""));
+    var category = params.get("category");
+    var productParams = new URLSearchParams();
+    if (q) {
+      productParams.set("q", q);
+    }
+    if (category) {
+      productParams.set("category", category);
+    }
+    var suffix = productParams.toString() ? "?" + productParams.toString() : "";
+    var payload = await api("/api/products" + suffix);
     state.products = payload.products || [];
     return state.products;
   }
@@ -156,6 +256,11 @@
       });
       qsa(".product_name a, .primary_img, .secondary_img", article).forEach(function (link) {
         link.setAttribute("href", "product-details.html?id=" + encodeURIComponent(product.id));
+      });
+      qsa(".quick_button a", article).forEach(function (link) {
+        link.setAttribute("href", "product-details.html?id=" + encodeURIComponent(product.id));
+        link.removeAttribute("data-bs-toggle");
+        link.removeAttribute("data-bs-target");
       });
     });
   }
@@ -592,6 +697,200 @@
     }
   }
 
+  function blogUrl(slug) {
+    return "blog-details.html?post=" + encodeURIComponent(slug);
+  }
+
+  function blogCard(post) {
+    return [
+      '<article class="single_blog rsport-blog-card">',
+      "<figure>",
+      '<div class="blog_thumb"><a href="' + blogUrl(post.slug) + '"><img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '"></a></div>',
+      '<figcaption class="blog_content">',
+      '<h4 class="post_title"><a href="' + blogUrl(post.slug) + '">' + escapeHtml(post.title) + "</a></h4>",
+      '<p class="post_date"><i class="fa fa-calendar" aria-hidden="true"></i> ' + escapeHtml(post.date) + " | " + escapeHtml(post.author) + "</p>",
+      '<p class="post_desc">' + escapeHtml(post.excerpt) + "</p>",
+      '<footer class="btn_more"><a href="' + blogUrl(post.slug) + '">Read article</a></footer>',
+      "</figcaption>",
+      "</figure>",
+      "</article>"
+    ].join("");
+  }
+
+  function initHomeHeroAndCategories() {
+    var slides = qsa(".slider_area .single_slider");
+    var slideContent = [
+      {
+        image: "assets/img/bg/banner7.webp",
+        kicker: "Train smarter",
+        title: "Gear for every serious session",
+        text: "Shop boxing, strength, cardio, and recovery essentials picked for daily athletes."
+      },
+      {
+        image: "assets/img/bg/banner1.webp",
+        kicker: "Move with purpose",
+        title: "Build your setup with confidence",
+        text: "Trusted sports equipment, secure checkout, and fast access to the pieces you actually need."
+      }
+    ];
+    slides.forEach(function (slide, index) {
+      var content = slideContent[index % slideContent.length];
+      slide.dataset.bgimg = content.image;
+      slide.style.backgroundImage = "linear-gradient(90deg, rgba(12, 18, 22, 0.78), rgba(12, 18, 22, 0.2)), url(" + content.image + ")";
+      var h1 = qs("h1", slide);
+      var h2 = qs("h2", slide);
+      var p = qs("p", slide);
+      if (h1) {
+        h1.textContent = content.kicker;
+      }
+      if (h2) {
+        h2.textContent = content.title;
+      }
+      if (p) {
+        p.textContent = content.text;
+      }
+    });
+
+    var menu = qs(".categories_menu_toggle");
+    if (menu) {
+      menu.innerHTML =
+        '<ul class="rsport-category-list">' +
+        CATEGORY_LINKS.map(function (category) {
+          return [
+            "<li>",
+            '<a class="rsport-category-link" href="' + category.href + '">',
+            "<span>" + escapeHtml(category.label) + "</span>",
+            "<small>" + escapeHtml(category.detail) + "</small>",
+            "</a>",
+            "</li>"
+          ].join("");
+        }).join("") +
+        "</ul>";
+      menu.style.display = "block";
+    }
+  }
+
+  function initCategoryNavigation() {
+    document.addEventListener(
+      "click",
+      function (event) {
+        var link = event.target.closest(".rsport-category-link");
+        if (!link) {
+          return;
+        }
+        event.preventDefault();
+        window.location.href = link.href;
+      },
+      true
+    );
+
+    var sidebar = qs(".widget_list.widget_categories > ul");
+    if (sidebar) {
+      sidebar.innerHTML = CATEGORY_LINKS.map(function (category) {
+        return '<li><a href="' + category.href + '">' + escapeHtml(category.label) + "</a></li>";
+      }).join("");
+    }
+  }
+
+  function initBlogContent() {
+    var carousel = qs(".blog_column3");
+    if (carousel) {
+      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
+        try {
+          window.jQuery(carousel).trigger("destroy.owl.carousel");
+          window.jQuery(carousel).removeClass("owl-loaded owl-hidden");
+        } catch (error) {
+          // Old templates may not have initialized the carousel yet.
+        }
+      }
+      carousel.innerHTML = BLOG_POSTS.slice(0, 5).map(blogCard).join("");
+      if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
+        window.jQuery(carousel).owlCarousel({
+          autoplay: false,
+          loop: true,
+          nav: true,
+          items: 3,
+          dots: false,
+          margin: 30,
+          navText: ['<i class="fa fa-chevron-left" aria-hidden="true"></i>', '<i class="fa fa-chevron-right" aria-hidden="true"></i>'],
+          responsive: {
+            0: { items: 1 },
+            768: { items: 2 },
+            992: { items: 3 }
+          }
+        });
+      }
+    }
+
+    var blogGrid = qs(".blog_wrapper > .row");
+    if (blogGrid && qs(".blog_page_section")) {
+      blogGrid.innerHTML = BLOG_POSTS.map(function (post) {
+        return '<div class="col-lg-4 col-md-6">' + blogCard(post) + "</div>";
+      }).join("");
+    }
+
+    var recentList = qs(".blog_sidebar_widget .recent_post_container");
+    if (recentList) {
+      recentList.innerHTML = BLOG_POSTS.slice(0, 4).map(function (post) {
+        return [
+          '<article class="recent_post">',
+          '<figure><div class="post_thumb"><a href="' + blogUrl(post.slug) + '"><img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '"></a></div>',
+          '<figcaption class="post_content"><h4><a href="' + blogUrl(post.slug) + '">' + escapeHtml(post.title) + "</a></h4>",
+          '<p><i class="fa fa-calendar" aria-hidden="true"></i> ' + escapeHtml(post.date) + "</p></figcaption></figure>",
+          "</article>"
+        ].join("");
+      }).join("");
+    }
+
+    var detail = qs(".rsport-blog-detail");
+    if (detail) {
+      var params = new URLSearchParams(window.location.search);
+      var post = BLOG_POSTS.find(function (entry) {
+        return entry.slug === params.get("post");
+      }) || BLOG_POSTS[0];
+      detail.innerHTML = [
+        '<img class="rsport-blog-hero" src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '">',
+        '<p class="post_date"><i class="fa fa-calendar" aria-hidden="true"></i> ' + escapeHtml(post.date) + " | " + escapeHtml(post.author) + "</p>",
+        "<h1>" + escapeHtml(post.title) + "</h1>",
+        '<p class="rsport-lead">' + escapeHtml(post.excerpt) + "</p>",
+        post.body.map(function (paragraph) {
+          return "<p>" + escapeHtml(paragraph) + "</p>";
+        }).join(""),
+        '<a class="rsport-back-link" href="blog.html">Back to blog</a>'
+      ].join("");
+      document.title = "RSPort - " + post.title;
+    }
+  }
+
+  function initSocialAuthButtons() {
+    qsa(".account_form").forEach(function (formBox, index) {
+      if (qs(".rsport-social-login", formBox)) {
+        return;
+      }
+      var heading = qs("h2", formBox);
+      if (!heading) {
+        return;
+      }
+      var mode = index === 0 ? "Sign in" : "Create account";
+      var wrapper = document.createElement("div");
+      wrapper.className = "rsport-social-login";
+      wrapper.innerHTML = [
+        '<button type="button" data-social-provider="Google"><span>G</span>' + mode + " with Google</button>",
+        '<button type="button" data-social-provider="Facebook"><span>f</span>' + mode + " with Facebook</button>",
+        '<button type="button" data-social-provider="Apple"><span>A</span>' + mode + " with Apple</button>"
+      ].join("");
+      heading.insertAdjacentElement("afterend", wrapper);
+    });
+
+    document.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-social-provider]");
+      if (!button) {
+        return;
+      }
+      notify(button.dataset.socialProvider + " sign-in needs OAuth keys before it can be enabled.", "error");
+    });
+  }
+
   function initSearch() {
     qsa(".search_box form").forEach(function (form) {
       form.addEventListener("submit", function (event) {
@@ -608,13 +907,17 @@
       await loadMe();
       initSearch();
       initAddToCart();
+      initCategoryNavigation();
+      initHomeHeroAndCategories();
       await initShop();
       await hydrateStaticProductCards();
       await initProductDetails();
       await initCartPage();
       await initCheckoutPage();
       initAuthForms();
+      initSocialAuthButtons();
       await initAccountPage();
+      initBlogContent();
     } catch (error) {
       notify(error.message, "error");
     }
