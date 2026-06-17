@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "products": [
+    {
+      "id": "gloves-pro",
+      "name": "RSPort Pro Boxing Gloves",
+      "slug": "rsport-pro-boxing-gloves",
+      "category": "Boxing",
+      "description": "Durable sparring gloves with wrist support, breathable lining, and balanced padding for daily training.",
+      "priceCents": 7999,
+      "compareAtCents": 8999,
+      "stock": 28,
+      "image": "assets/img/product/product1.webp",
+      "secondaryImage": "assets/img/product/product2.webp",
+      "gallery": [
+        "assets/img/product/productbig.webp",
+        "assets/img/product/productbig1.webp",
+        "assets/img/product/productbig2.webp"
+      ],
+      "featured": true
+    },
+    {
+      "id": "strength-belt",
+      "name": "CoreLift Strength Belt",
+      "slug": "corelift-strength-belt",
+      "category": "Strength",
+      "description": "Supportive lifting belt with reinforced stitching and a quick-adjust steel buckle.",
+      "priceCents": 5499,
+      "compareAtCents": 6499,
+      "stock": 35,
+      "image": "assets/img/product/product3.webp",
+      "secondaryImage": "assets/img/product/product4.webp",
+      "gallery": [
+        "assets/img/product/productbig1.webp",
+        "assets/img/product/productbig2.webp"
+      ],
+      "featured": true
+    },
+    {
+      "id": "training-shoes",
+      "name": "Velocity Training Shoes",
+      "slug": "velocity-training-shoes",
+      "category": "Footwear",
+      "description": "Stable gym trainers with flexible grip for lifting, circuits, and indoor conditioning.",
+      "priceCents": 8999,
+      "compareAtCents": 10499,
+      "stock": 20,
+      "image": "assets/img/product/product5.webp",
+      "secondaryImage": "assets/img/product/product6.webp",
+      "gallery": [
+        "assets/img/product/productbig2.webp",
+        "assets/img/product/productbig3.webp"
+      ],
+      "featured": true
+    },
+    {
+      "id": "jump-rope-speed",
+      "name": "SpeedForm Jump Rope",
+      "slug": "speedform-jump-rope",
+      "category": "Cardio",
+      "description": "Adjustable steel-cable rope with smooth bearings for quick footwork and conditioning.",
+      "priceCents": 2499,
+      "compareAtCents": 2999,
+      "stock": 70,
+      "image": "assets/img/product/product7.webp",
+      "secondaryImage": "assets/img/product/product8.webp",
+      "gallery": [
+        "assets/img/product/productbig3.webp"
+      ],
+      "featured": false
+    },
+    {
+      "id": "resistance-band-set",
+      "name": "Resistance Band Set",
+      "slug": "resistance-band-set",
+      "category": "Recovery",
+      "description": "Five resistance levels with door anchor, handles, and compact carry bag.",
+      "priceCents": 3499,
+      "compareAtCents": 3999,
+      "stock": 58,
+      "image": "assets/img/product/product9.webp",
+      "secondaryImage": "assets/img/product/product10.webp",
+      "gallery": [
+        "assets/img/product/productbig5.webp"
+      ],
+      "featured": false
+    },
+    {
+      "id": "performance-tee",
+      "name": "RSPort Performance Tee",
+      "slug": "rsport-performance-tee",
+      "category": "Apparel",
+      "description": "Lightweight moisture-wicking shirt for gym sessions and everyday training.",
+      "priceCents": 2999,
+      "compareAtCents": 3499,
+      "stock": 90,
+      "image": "assets/img/product/product11.webp",
+      "secondaryImage": "assets/img/product/product12.webp",
+      "gallery": [
+        "assets/img/product/productbig.webp"
+      ],
+      "featured": true
+    },
+    {
+      "id": "kettlebell-16",
+      "name": "Cast Iron Kettlebell 16kg",
+      "slug": "cast-iron-kettlebell-16kg",
+      "category": "Strength",
+      "description": "Powder-coated kettlebell with a wide handle for swings, cleans, and carries.",
+      "priceCents": 6999,
+      "compareAtCents": 7999,
+      "stock": 16,
+      "image": "assets/img/product/product13.webp",
+      "secondaryImage": "assets/img/product/product14.webp",
+      "gallery": [
+        "assets/img/product/productbig1.webp"
+      ],
+      "featured": false
+    },
+    {
+      "id": "gym-bag-elite",
+      "name": "Elite Training Duffel Bag",
+      "slug": "elite-training-duffel-bag",
+      "category": "Accessories",
+      "description": "Water-resistant gym bag with shoe compartment, padded strap, and quick-access pockets.",
+      "priceCents": 5999,
+      "compareAtCents": 6999,
+      "stock": 25,
+      "image": "assets/img/product/product15.webp",
+      "secondaryImage": "assets/img/product/product16.webp",
+      "gallery": [
+        "assets/img/product/productbig2.webp"
+      ],
+      "featured": true
+    }
+  ],
+  "coupons": [
+    {
+      "code": "WELCOME10",
+      "percentOff": 10,
+      "active": true,
+      "uses": 0,
+      "maxUses": 500
+    }
+  ],
+  "users": [],
+  "sessions": [],
+  "carts": [],
+  "orders": [],
+  "createdAt": "2026-06-17T00:00:00.000Z",
+  "updatedAt": "2026-06-17T00:00:00.000Z"
+}

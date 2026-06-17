@@ -1,0 +1,23 @@
+{
+  "name": "rsport-sports-store",
+  "version": "1.0.0",
+  "description": "Full-stack sports shop with a static storefront, secure Node backend, and Stripe-ready checkout.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "test": "node --test",
+    "check": "npm run test"
+  },
+  "keywords": [
+    "sports-store",
+    "ecommerce",
+    "stripe",
+    "node"
+  ],
+  "author": "Rafael Blackwood",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

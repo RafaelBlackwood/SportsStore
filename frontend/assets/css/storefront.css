@@ -1,0 +1,55 @@
+.rsport-notice {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    max-width: 360px;
+    padding: 14px 16px;
+    color: #fff;
+    background: #151515;
+    border-left: 4px solid #e51515;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.rsport-notice.success {
+    border-left-color: #2a9d55;
+}
+
+.rsport-empty,
+.rsport-status {
+    padding: 18px;
+    margin: 16px 0;
+    background: #f6f6f6;
+    border: 1px solid #e5e5e5;
+}
+
+.rsport-status.error {
+    border-color: #e51515;
+    color: #9d1111;
+}
+
+.rsport-payment-box {
+    margin-top: 18px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #dedede;
+}
+
+.rsport-card-element {
+    padding: 14px 12px;
+    margin: 12px 0;
+    border: 1px solid #dedede;
+    background: #fff;
+}
+
+.rsport-secure-note {
+    margin: 8px 0 0;
+    color: #555;
+    font-size: 13px;
+}
+
+.rsport-inline-action {
+    cursor: pointer;
+}
