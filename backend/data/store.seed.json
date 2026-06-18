@@ -17,6 +17,20 @@
         "assets/img/product/productbig1.webp",
         "assets/img/product/productbig2.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "White",
+          "Red",
+          "Navy"
+        ],
+        "sizes": [
+          "10 oz",
+          "12 oz",
+          "14 oz",
+          "16 oz"
+        ]
+      },
       "featured": true
     },
     {
@@ -34,6 +48,18 @@
         "assets/img/product/productbig1.webp",
         "assets/img/product/productbig2.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "Graphite"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ]
+      },
       "featured": true
     },
     {
@@ -51,6 +77,21 @@
         "assets/img/product/productbig2.webp",
         "assets/img/product/productbig3.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "White",
+          "Electric Blue"
+        ],
+        "sizes": [
+          "40",
+          "41",
+          "42",
+          "43",
+          "44",
+          "45"
+        ]
+      },
       "featured": true
     },
     {
@@ -67,6 +108,16 @@
       "gallery": [
         "assets/img/product/productbig3.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "Red",
+          "Yellow"
+        ],
+        "sizes": [
+          "Adjustable"
+        ]
+      },
       "featured": false
     },
     {
@@ -83,6 +134,14 @@
       "gallery": [
         "assets/img/product/productbig5.webp"
       ],
+      "options": {
+        "colors": [
+          "Multi"
+        ],
+        "sizes": [
+          "Set of 5"
+        ]
+      },
       "featured": false
     },
     {
@@ -99,6 +158,19 @@
       "gallery": [
         "assets/img/product/productbig.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "White",
+          "Neon Lime"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ]
+      },
       "featured": true
     },
     {
@@ -115,6 +187,14 @@
       "gallery": [
         "assets/img/product/productbig1.webp"
       ],
+      "options": {
+        "colors": [
+          "Black"
+        ],
+        "sizes": [
+          "16 kg"
+        ]
+      },
       "featured": false
     },
     {
@@ -131,6 +211,17 @@
       "gallery": [
         "assets/img/product/productbig2.webp"
       ],
+      "options": {
+        "colors": [
+          "Black",
+          "Red",
+          "Graphite"
+        ],
+        "sizes": [
+          "35 L",
+          "50 L"
+        ]
+      },
       "featured": true
     }
   ],
@@ -146,6 +237,7 @@
   "users": [],
   "sessions": [],
   "carts": [],
+  "wishlists": [],
   "orders": [],
   "createdAt": "2026-06-17T00:00:00.000Z",
   "updatedAt": "2026-06-17T00:00:00.000Z"

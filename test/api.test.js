@@ -62,6 +62,34 @@ test("products and cart API calculate trusted totals", async () => {
   });
 });
 
+test("wishlist API stores guest favorites without navigating through the cart", async () => {
+  await withApp(async (baseUrl) => {
+    const products = await fetch(`${baseUrl}/api/products`).then((res) => res.json());
+    const addResponse = await fetch(`${baseUrl}/api/wishlist/items`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: products.products[0].id })
+    });
+    assert.equal(addResponse.status, 200);
+    const cookie = addResponse.headers.get("set-cookie");
+    const added = await addResponse.json();
+    assert.equal(added.wishlist.items[0].id, products.products[0].id);
+
+    const getResponse = await fetch(`${baseUrl}/api/wishlist`, {
+      headers: { cookie }
+    });
+    const wishlist = await getResponse.json();
+    assert.equal(wishlist.wishlist.items.length, 1);
+
+    const deleteResponse = await fetch(`${baseUrl}/api/wishlist/items/${products.products[0].id}`, {
+      method: "DELETE",
+      headers: { cookie }
+    });
+    const removed = await deleteResponse.json();
+    assert.equal(removed.wishlist.items.length, 0);
+  });
+});
+
 test("auth uses httpOnly session cookies and protects account orders", async () => {
   await withApp(async (baseUrl) => {
     const registerResponse = await fetch(`${baseUrl}/api/auth/register`, {

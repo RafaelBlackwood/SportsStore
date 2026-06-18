@@ -56,8 +56,32 @@ function publicProduct(product) {
     image: product.image,
     secondaryImage: product.secondaryImage,
     gallery: product.gallery || [],
-    featured: Boolean(product.featured)
+    featured: Boolean(product.featured),
+    options: product.options || defaultProductOptions(product.category)
   };
+}
+
+function defaultProductOptions(category) {
+  const normalized = String(category || "").toLowerCase();
+  if (normalized === "footwear") {
+    return { colors: ["Black", "White", "Electric Blue"], sizes: ["40", "41", "42", "43", "44", "45"] };
+  }
+  if (normalized === "apparel") {
+    return { colors: ["Black", "White", "Neon Lime"], sizes: ["S", "M", "L", "XL"] };
+  }
+  if (normalized === "boxing") {
+    return { colors: ["Black", "White", "Red", "Navy"], sizes: ["10 oz", "12 oz", "14 oz", "16 oz"] };
+  }
+  if (normalized === "strength") {
+    return { colors: ["Black", "Graphite"], sizes: ["S", "M", "L", "XL"] };
+  }
+  if (normalized === "cardio") {
+    return { colors: ["Black", "Red", "Yellow"], sizes: ["Adjustable"] };
+  }
+  if (normalized === "accessories") {
+    return { colors: ["Black", "Red", "Graphite"], sizes: ["One size"] };
+  }
+  return { colors: ["Black", "Graphite"], sizes: ["One size"] };
 }
 
 function publicUser(user) {
@@ -167,6 +191,19 @@ function formatCart(state, cart, config) {
   };
 }
 
+function formatWishlist(state, wishlist) {
+  return {
+    id: wishlist.id,
+    items: (wishlist.productIds || [])
+      .map((productId) => findProduct(state, productId))
+      .filter(Boolean)
+      .map((product) => ({
+        ...publicProduct(product),
+        stockStatus: product.stock > 0 ? "In Stock" : "Out of Stock"
+      }))
+  };
+}
+
 function getCartFromRequest(req, res, store, config, session) {
   const cookies = parseCookies(req.headers.cookie);
   const now = new Date().toISOString();
@@ -227,30 +264,76 @@ function mergeGuestCart(store, guestCartId, userId) {
     return;
   }
   store.update((state) => {
+    state.wishlists = state.wishlists || [];
     const guest = state.carts.find((cart) => cart.id === guestCartId && !cart.userId);
-    if (!guest) {
-      return;
-    }
-    let userCart = state.carts.find((cart) => cart.userId === userId);
-    if (!userCart) {
-      userCart = {
-        id: randomId("cart"),
-        userId,
-        items: [],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-      state.carts.push(userCart);
-    }
-    for (const item of guest.items) {
-      const existing = userCart.items.find((entry) => entry.productId === item.productId);
-      if (existing) {
-        existing.quantity += item.quantity;
-      } else {
-        userCart.items.push({ ...item });
+    if (guest) {
+      let userCart = state.carts.find((cart) => cart.userId === userId);
+      if (!userCart) {
+        userCart = {
+          id: randomId("cart"),
+          userId,
+          items: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        state.carts.push(userCart);
       }
+      for (const item of guest.items) {
+        const existing = userCart.items.find((entry) => entry.productId === item.productId);
+        if (existing) {
+          existing.quantity += item.quantity;
+        } else {
+          userCart.items.push({ ...item });
+        }
+      }
+      state.carts = state.carts.filter((cart) => cart.id !== guest.id);
     }
-    state.carts = state.carts.filter((cart) => cart.id !== guest.id);
+
+    const guestWishlist = state.wishlists.find((wishlist) => wishlist.cartId === guestCartId && !wishlist.userId);
+    if (guestWishlist) {
+      let userWishlist = state.wishlists.find((wishlist) => wishlist.userId === userId);
+      if (!userWishlist) {
+        userWishlist = {
+          id: randomId("wish"),
+          userId,
+          cartId: "",
+          productIds: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        state.wishlists.push(userWishlist);
+      }
+      for (const productId of guestWishlist.productIds || []) {
+        if (!userWishlist.productIds.includes(productId)) {
+          userWishlist.productIds.push(productId);
+        }
+      }
+      userWishlist.updatedAt = new Date().toISOString();
+      state.wishlists = state.wishlists.filter((wishlist) => wishlist.id !== guestWishlist.id);
+    }
+  });
+}
+
+function getWishlistFromRequest(req, res, store, config, session) {
+  const now = new Date().toISOString();
+  const cart = getCartFromRequest(req, res, store, config, session);
+  return store.update((state) => {
+    state.wishlists = state.wishlists || [];
+    let wishlist = session
+      ? state.wishlists.find((entry) => entry.userId === session.userId)
+      : state.wishlists.find((entry) => entry.cartId === cart.id && !entry.userId);
+    if (!wishlist) {
+      wishlist = {
+        id: randomId("wish"),
+        userId: session?.userId || null,
+        cartId: session ? "" : cart.id,
+        productIds: [],
+        createdAt: now,
+        updatedAt: now
+      };
+      state.wishlists.push(wishlist);
+    }
+    return wishlist;
   });
 }
 
@@ -380,6 +463,39 @@ function createApi(config, store) {
   add("GET", "/api/cart", async ({ req, res, session }) => {
     const cart = getCartFromRequest(req, res, store, config, session);
     sendJson(res, 200, { cart: formatCart(store.read(), cart, config) });
+  });
+
+  add("GET", "/api/wishlist", async ({ req, res, session }) => {
+    const wishlist = getWishlistFromRequest(req, res, store, config, session);
+    sendJson(res, 200, { wishlist: formatWishlist(store.read(), wishlist) });
+  });
+
+  add("POST", "/api/wishlist/items", async ({ req, res, session }) => {
+    const body = await readJson(req, config.maxJsonBytes);
+    const productId = cleanString(body.productId, "Product", { max: 80 });
+    const wishlist = getWishlistFromRequest(req, res, store, config, session);
+    const updatedWishlist = store.update((state) => {
+      const product = findProduct(state, productId);
+      assertHttp(product, 404, "Product not found.");
+      const activeWishlist = state.wishlists.find((entry) => entry.id === wishlist.id);
+      if (!activeWishlist.productIds.includes(productId)) {
+        activeWishlist.productIds.push(productId);
+      }
+      activeWishlist.updatedAt = new Date().toISOString();
+      return activeWishlist;
+    });
+    sendJson(res, 200, { wishlist: formatWishlist(store.read(), updatedWishlist) });
+  });
+
+  add("DELETE", "/api/wishlist/items/:productId", async ({ req, res, params, session }) => {
+    const wishlist = getWishlistFromRequest(req, res, store, config, session);
+    const updatedWishlist = store.update((state) => {
+      const activeWishlist = state.wishlists.find((entry) => entry.id === wishlist.id);
+      activeWishlist.productIds = activeWishlist.productIds.filter((productId) => productId !== params.productId);
+      activeWishlist.updatedAt = new Date().toISOString();
+      return activeWishlist;
+    });
+    sendJson(res, 200, { wishlist: formatWishlist(store.read(), updatedWishlist) });
   });
 
   add("POST", "/api/cart/items", async ({ req, res, session }) => {

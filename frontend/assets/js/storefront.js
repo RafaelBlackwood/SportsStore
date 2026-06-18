@@ -7,7 +7,8 @@
     csrfToken: "",
     config: null,
     stripe: null,
-    card: null
+    card: null,
+    compareIds: []
   };
 
   var BLOG_POSTS = [
@@ -101,6 +102,61 @@
     { label: "Accessories", href: "shop.html?category=Accessories", detail: "Bags, wraps, bottles" }
   ];
 
+  var COLOR_STYLES = {
+    Black: { hex: "#05070a", filter: "contrast(1.08) saturate(0.9) brightness(0.82)" },
+    White: { hex: "#f8fafc", filter: "brightness(1.18) saturate(0.88)" },
+    Red: { hex: "#ff334f", filter: "sepia(0.25) saturate(1.65) hue-rotate(315deg)" },
+    Navy: { hex: "#163b8f", filter: "sepia(0.18) saturate(1.35) hue-rotate(175deg)" },
+    Graphite: { hex: "#6e7781", filter: "grayscale(0.35) contrast(1.02)" },
+    "Electric Blue": { hex: "#17d5ff", filter: "sepia(0.18) saturate(1.8) hue-rotate(150deg)" },
+    Yellow: { hex: "#f7e642", filter: "sepia(0.4) saturate(1.45) hue-rotate(16deg) brightness(1.08)" },
+    "Neon Lime": { hex: "#b8ff4d", filter: "sepia(0.35) saturate(1.7) hue-rotate(48deg) brightness(1.08)" },
+    Multi: { hex: "linear-gradient(135deg, #17d5ff, #b8ff4d, #ff334f)", filter: "saturate(1.35) contrast(1.05)" }
+  };
+
+  var REVIEW_COPY = {
+    "gloves-pro": {
+      name: "Marta",
+      date: "June 4, 2026",
+      text: "The wrist support feels secure and the padding is balanced enough for long bag sessions."
+    },
+    "strength-belt": {
+      name: "Jakub",
+      date: "May 29, 2026",
+      text: "Solid buckle, comfortable fit, and it stays in place during heavier sets."
+    },
+    "training-shoes": {
+      name: "Amelia",
+      date: "May 22, 2026",
+      text: "Stable for lifting but still flexible enough for circuits. Exactly what I wanted."
+    },
+    "jump-rope-speed": {
+      name: "Noah",
+      date: "May 17, 2026",
+      text: "The bearings are smooth and the rope is easy to adjust before warmups."
+    },
+    "resistance-band-set": {
+      name: "Lena",
+      date: "May 10, 2026",
+      text: "Great range of resistance levels for rehab work, warmups, and travel sessions."
+    },
+    "performance-tee": {
+      name: "Oskar",
+      date: "May 6, 2026",
+      text: "Lightweight fabric, clean cut, and it dries quickly after harder training."
+    },
+    "kettlebell-16": {
+      name: "Kacper",
+      date: "April 30, 2026",
+      text: "The handle has enough room for two-hand swings and the finish grips well."
+    },
+    "gym-bag-elite": {
+      name: "Zofia",
+      date: "April 24, 2026",
+      text: "The separate shoe pocket is genuinely useful and the bag feels sturdy without being bulky."
+    }
+  };
+
   function qs(selector, root) {
     return (root || document).querySelector(selector);
   }
@@ -124,6 +180,63 @@
       style: "currency",
       currency: currency.toUpperCase()
     }).format((cents || 0) / 100);
+  }
+
+  function unique(values) {
+    return values.filter(function (value, index) {
+      return value && values.indexOf(value) === index;
+    });
+  }
+
+  function defaultOptionsFor(product) {
+    var category = String((product && product.category) || "").toLowerCase();
+    if (category === "footwear") {
+      return { colors: ["Black", "White", "Electric Blue"], sizes: ["40", "41", "42", "43", "44", "45"] };
+    }
+    if (category === "apparel") {
+      return { colors: ["Black", "White", "Neon Lime"], sizes: ["S", "M", "L", "XL"] };
+    }
+    if (category === "boxing") {
+      return { colors: ["Black", "White", "Red", "Navy"], sizes: ["10 oz", "12 oz", "14 oz", "16 oz"] };
+    }
+    if (category === "strength") {
+      return { colors: ["Black", "Graphite"], sizes: ["S", "M", "L", "XL"] };
+    }
+    if (category === "cardio") {
+      return { colors: ["Black", "Red", "Yellow"], sizes: ["Adjustable"] };
+    }
+    if (category === "accessories") {
+      return { colors: ["Black", "Red", "Graphite"], sizes: ["One size"] };
+    }
+    return { colors: ["Black", "Graphite"], sizes: ["One size"] };
+  }
+
+  function productOptions(product) {
+    var fallback = defaultOptionsFor(product);
+    return {
+      colors: ((product.options && product.options.colors) || fallback.colors || []).slice(),
+      sizes: ((product.options && product.options.sizes) || fallback.sizes || []).slice()
+    };
+  }
+
+  function productImages(product) {
+    return unique([product.image, product.secondaryImage]);
+  }
+
+  function findLoadedProduct(productId) {
+    return state.products.find(function (product) {
+      return product.id === productId;
+    });
+  }
+
+  function productById(productId) {
+    var loaded = findLoadedProduct(productId);
+    if (loaded) {
+      return Promise.resolve(loaded);
+    }
+    return api("/api/products/" + encodeURIComponent(productId)).then(function (payload) {
+      return payload.product;
+    });
   }
 
   function notify(message, type) {
@@ -197,19 +310,20 @@
     return state.products;
   }
 
-  function productCard(product) {
+  function productCard(product, compact) {
+    var image = product.image;
     return [
-      '<div class="col-lg-4 col-md-4 col-12">',
+      compact ? "" : '<div class="col-lg-4 col-md-4 col-12">',
       '<article class="single_product" data-product-id="' + escapeHtml(product.id) + '">',
       "<figure>",
       '<div class="product_thumb">',
-      '<a class="primary_img" href="product-details.html?id=' + encodeURIComponent(product.id) + '"><img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '"></a>',
-      '<a class="secondary_img" href="product-details.html?id=' + encodeURIComponent(product.id) + '"><img src="' + escapeHtml(product.secondaryImage || product.image) + '" alt="' + escapeHtml(product.name) + '"></a>',
+      '<a class="primary_img" href="product-details.html?id=' + encodeURIComponent(product.id) + '"><img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name) + '"></a>',
+      '<a class="secondary_img" href="product-details.html?id=' + encodeURIComponent(product.id) + '"><img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name) + '"></a>',
       '<div class="action_links"><ul>',
       '<li class="add_to_cart"><a href="#" data-product-id="' + escapeHtml(product.id) + '" title="Add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>',
-      '<li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a></li>',
-      '<li class="compare"><a href="#" title="compare"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>',
-      '<li class="quick_button"><a href="product-details.html?id=' + encodeURIComponent(product.id) + '" title="quick view"><i class="fa fa-search" aria-hidden="true"></i></a></li>',
+      '<li class="wishlist"><a href="#" data-wishlist-product="' + escapeHtml(product.id) + '" title="Add to Wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a></li>',
+      '<li class="compare"><a href="#" data-compare-product="' + escapeHtml(product.id) + '" title="Compare"><i class="fa fa-refresh" aria-hidden="true"></i></a></li>',
+      '<li class="quick_button"><a href="#" data-quick-view="' + escapeHtml(product.id) + '" title="Quick view"><i class="fa fa-search" aria-hidden="true"></i></a></li>',
       "</ul></div>",
       "</div>",
       '<figcaption class="product_content">',
@@ -218,7 +332,7 @@
       "</figcaption>",
       "</figure>",
       "</article>",
-      "</div>"
+      compact ? "" : "</div>"
     ].join("");
   }
 
@@ -250,15 +364,41 @@
       }
       var product = products[index % products.length];
       article.dataset.productId = product.id;
+      qsa(".primary_img img, .secondary_img img", article).forEach(function (image) {
+        image.setAttribute("src", product.image);
+        image.setAttribute("alt", product.name);
+      });
+      qsa(".product_name a", article).forEach(function (link) {
+        link.textContent = product.name;
+      });
+      qsa(".price_box", article).forEach(function (box) {
+        box.innerHTML =
+          '<span class="current_price">' +
+          money(product.priceCents) +
+          "</span>" +
+          (product.compareAtCents ? '<span class="old_price">' + money(product.compareAtCents) + "</span>" : "");
+      });
+      qsa(".product_desc p", article).forEach(function (paragraph) {
+        paragraph.textContent = product.description;
+      });
       qsa(".add_to_cart a", article).forEach(function (link) {
         link.dataset.productId = product.id;
+        link.setAttribute("href", "#");
+      });
+      qsa(".wishlist a", article).forEach(function (link) {
+        link.dataset.wishlistProduct = product.id;
+        link.setAttribute("href", "#");
+      });
+      qsa(".compare a", article).forEach(function (link) {
+        link.dataset.compareProduct = product.id;
         link.setAttribute("href", "#");
       });
       qsa(".product_name a, .primary_img, .secondary_img", article).forEach(function (link) {
         link.setAttribute("href", "product-details.html?id=" + encodeURIComponent(product.id));
       });
       qsa(".quick_button a", article).forEach(function (link) {
-        link.setAttribute("href", "product-details.html?id=" + encodeURIComponent(product.id));
+        link.dataset.quickView = product.id;
+        link.setAttribute("href", "#");
         link.removeAttribute("data-bs-toggle");
         link.removeAttribute("data-bs-target");
       });
@@ -274,6 +414,112 @@
       }
     });
     notify("Added to cart.", "success");
+  }
+
+  async function addToWishlist(productId) {
+    await api("/api/wishlist/items", {
+      method: "POST",
+      body: { productId: productId }
+    });
+    notify("Added to wishlist.", "success");
+  }
+
+  function compareIds() {
+    try {
+      return JSON.parse(window.localStorage.getItem("rsport_compare_ids") || "[]");
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveCompareIds(ids) {
+    state.compareIds = unique(ids).slice(0, 4);
+    window.localStorage.setItem("rsport_compare_ids", JSON.stringify(state.compareIds));
+  }
+
+  async function addToCompare(productId) {
+    var ids = compareIds();
+    if (!ids.includes(productId)) {
+      ids.unshift(productId);
+    }
+    saveCompareIds(ids);
+    await renderCompareTray(true);
+    notify("Added to compare.", "success");
+  }
+
+  async function renderCompareTray(open) {
+    var tray = qs(".rsport-compare-tray");
+    if (!tray) {
+      tray = document.createElement("aside");
+      tray.className = "rsport-compare-tray";
+      document.body.appendChild(tray);
+    }
+    var ids = compareIds();
+    if (!ids.length) {
+      tray.classList.remove("is-open");
+      tray.innerHTML = "";
+      return;
+    }
+    var products = await Promise.all(ids.map(productById));
+    tray.innerHTML = [
+      '<div class="rsport-compare-head">',
+      "<strong>Compare products</strong>",
+      '<button type="button" data-close-compare aria-label="Close compare">x</button>',
+      "</div>",
+      '<div class="rsport-compare-grid">',
+      products
+        .map(function (product) {
+          var options = productOptions(product);
+          return [
+            '<article class="rsport-compare-item">',
+            '<button type="button" data-remove-compare="' + escapeHtml(product.id) + '" aria-label="Remove from compare">x</button>',
+            '<img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '">',
+            "<h4>" + escapeHtml(product.name) + "</h4>",
+            "<p>" + escapeHtml(product.category) + "</p>",
+            '<strong>' + money(product.priceCents) + "</strong>",
+            '<small>Sizes: ' + escapeHtml(options.sizes.join(", ")) + "</small>",
+            '<a href="product-details.html?id=' + encodeURIComponent(product.id) + '">View product</a>',
+            "</article>"
+          ].join("");
+        })
+        .join(""),
+      "</div>"
+    ].join("");
+    if (open) {
+      tray.classList.add("is-open");
+    }
+  }
+
+  async function openQuickView(productId) {
+    var product = await productById(productId);
+    var options = productOptions(product);
+    var modal = qs(".rsport-quick-view");
+    if (!modal) {
+      modal = document.createElement("section");
+      modal.className = "rsport-quick-view";
+      document.body.appendChild(modal);
+    }
+    modal.innerHTML = [
+      '<div class="rsport-quick-view-backdrop" data-close-quick-view></div>',
+      '<article class="rsport-quick-view-card" role="dialog" aria-modal="true" aria-label="' + escapeHtml(product.name) + '">',
+      '<button type="button" class="rsport-quick-close" data-close-quick-view aria-label="Close quick view">x</button>',
+      '<div class="rsport-quick-media"><img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '"></div>',
+      '<div class="rsport-quick-content">',
+      '<span class="rsport-kicker">' + escapeHtml(product.category) + "</span>",
+      "<h3>" + escapeHtml(product.name) + "</h3>",
+      '<div class="price_box"><span class="current_price">' + money(product.priceCents) + "</span>" + (product.compareAtCents ? '<span class="old_price">' + money(product.compareAtCents) + "</span>" : "") + "</div>",
+      "<p>" + escapeHtml(product.description) + "</p>",
+      '<p class="rsport-options-line">Sizes: ' + escapeHtml(options.sizes.join(", ")) + "</p>",
+      '<div class="rsport-quick-actions">',
+      '<button type="button" data-add-to-cart data-product-id="' + escapeHtml(product.id) + '">Add to cart</button>',
+      '<button type="button" data-wishlist-product="' + escapeHtml(product.id) + '">Wishlist</button>',
+      '<button type="button" data-compare-product="' + escapeHtml(product.id) + '">Compare</button>',
+      '<a href="product-details.html?id=' + encodeURIComponent(product.id) + '">Details</a>',
+      "</div>",
+      "</div>",
+      "</article>"
+    ].join("");
+    modal.classList.add("is-open");
   }
 
   function initAddToCart() {
@@ -295,6 +541,82 @@
     });
   }
 
+  function initWishlistCompareQuickView() {
+    state.compareIds = compareIds();
+    renderCompareTray(false);
+
+    document.addEventListener("click", async function (event) {
+      var wishlistLink = event.target.closest("[data-wishlist-product], .wishlist a");
+      if (wishlistLink) {
+        var wishlistProductId =
+          wishlistLink.dataset.wishlistProduct || (wishlistLink.closest(".single_product") || {}).dataset.productId;
+        if (wishlistProductId) {
+          event.preventDefault();
+          try {
+            await addToWishlist(wishlistProductId);
+            if (qs(".wishlist_area")) {
+              await initWishlistPage();
+            }
+          } catch (error) {
+            notify(error.message, "error");
+          }
+          return;
+        }
+      }
+
+      var compareLink = event.target.closest("[data-compare-product], .compare a");
+      if (compareLink) {
+        var compareProductId =
+          compareLink.dataset.compareProduct || (compareLink.closest(".single_product") || {}).dataset.productId;
+        if (compareProductId) {
+          event.preventDefault();
+          try {
+            await addToCompare(compareProductId);
+          } catch (error) {
+            notify(error.message, "error");
+          }
+          return;
+        }
+      }
+
+      var quickLink = event.target.closest("[data-quick-view]");
+      if (quickLink) {
+        event.preventDefault();
+        try {
+          await openQuickView(quickLink.dataset.quickView);
+        } catch (error) {
+          notify(error.message, "error");
+        }
+        return;
+      }
+
+      if (event.target.closest("[data-close-quick-view]")) {
+        var quickView = qs(".rsport-quick-view");
+        if (quickView) {
+          quickView.classList.remove("is-open");
+        }
+        return;
+      }
+
+      var removeCompare = event.target.closest("[data-remove-compare]");
+      if (removeCompare) {
+        event.preventDefault();
+        saveCompareIds(compareIds().filter(function (id) {
+          return id !== removeCompare.dataset.removeCompare;
+        }));
+        await renderCompareTray(true);
+        return;
+      }
+
+      if (event.target.closest("[data-close-compare]")) {
+        var tray = qs(".rsport-compare-tray");
+        if (tray) {
+          tray.classList.remove("is-open");
+        }
+      }
+    });
+  }
+
   async function initProductDetails() {
     if (!document.body.textContent.includes("product details") || !qs(".product_d_right")) {
       return;
@@ -310,6 +632,8 @@
     if (!product) {
       return;
     }
+    var images = productImages(product);
+    var options = productOptions(product);
     var panel = qs(".product_d_right");
     qs("h1", panel).textContent = product.name;
     qs(".current_price", panel).textContent = money(product.priceCents);
@@ -321,12 +645,190 @@
     if (desc) {
       desc.textContent = product.description;
     }
-    var mainImage = qs("#zoom1");
-    if (mainImage) {
-      mainImage.setAttribute("src", product.gallery[0] || product.image);
-      mainImage.setAttribute("data-zoom-image", product.gallery[0] || product.image);
-      mainImage.setAttribute("alt", product.name);
+
+    var gallery = qs(".product-details-tab");
+    if (gallery) {
+      gallery.innerHTML = [
+        '<div id="img-1" class="zoomWrapper single-zoom">',
+        '<img id="zoom1" src="' + escapeHtml(images[0]) + '" data-zoom-image="' + escapeHtml(images[0]) + '" alt="' + escapeHtml(product.name) + '">',
+        "</div>",
+        '<div class="single-zoom-thumb">',
+        '<ul class="rsport-product-thumbs">',
+        images
+          .map(function (image, index) {
+            return [
+              "<li>",
+              '<button type="button" class="rsport-thumb-button ' + (index === 0 ? "active" : "") + '" data-product-image="' + escapeHtml(image) + '">',
+              '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name) + ' view ' + (index + 1) + '">',
+              "</button>",
+              "</li>"
+            ].join("");
+          })
+          .join(""),
+        "</ul>",
+        "</div>"
+      ].join("");
     }
+
+    var colorVariant = qs(".product_variant.color", panel);
+    if (colorVariant) {
+      colorVariant.innerHTML = [
+        "<h3>Available Options</h3>",
+        "<label>Color</label>",
+        '<div class="rsport-swatches" role="list">',
+        options.colors
+          .map(function (color, index) {
+            var style = COLOR_STYLES[color] || { hex: "#9aa4af", filter: "" };
+            return [
+              '<button type="button" class="rsport-color-swatch ' + (index === 0 ? "active" : "") + '" data-color="' + escapeHtml(color) + '" data-filter="' + escapeHtml(style.filter) + '" title="' + escapeHtml(color) + '">',
+              '<span style="background:' + escapeHtml(style.hex) + '"></span>',
+              "</button>"
+            ].join("");
+          })
+          .join(""),
+        "</div>",
+        '<p class="rsport-selected-option">Selected: ' + escapeHtml(options.colors[0] || "Default") + "</p>",
+        options.sizes.length
+          ? [
+              '<label class="rsport-size-label">Size</label>',
+              '<div class="rsport-size-grid">',
+              options.sizes
+                .map(function (size, index) {
+                  return '<button type="button" class="rsport-size-option ' + (index === 0 ? "active" : "") + '" data-size="' + escapeHtml(size) + '">' + escapeHtml(size) + "</button>";
+                })
+                .join(""),
+              "</div>"
+            ].join("")
+          : ""
+      ].join("");
+    }
+
+    var meta = qs(".product_meta span", panel);
+    if (meta) {
+      meta.innerHTML = 'Category: <a href="shop.html?category=' + encodeURIComponent(product.category) + '">' + escapeHtml(product.category) + "</a>";
+    }
+
+    var detailActions = qs(".product_d_action ul", panel);
+    if (detailActions) {
+      detailActions.innerHTML = [
+        '<li><a href="#" data-wishlist-product="' + escapeHtml(product.id) + '" title="Add to wishlist">+ Add to Wishlist</a></li>',
+        '<li><a href="#" data-compare-product="' + escapeHtml(product.id) + '" title="Compare">+ Compare</a></li>'
+      ].join("");
+    }
+
+    var info = qs("#info .product_info_content");
+    if (info) {
+      info.innerHTML = [
+        "<p>" + escapeHtml(product.description) + "</p>",
+        "<p>Designed for regular training, this product keeps the focus on comfort, durability, and simple everyday performance.</p>"
+      ].join("");
+    }
+
+    var sheet = qs("#sheet .product_d_table tbody");
+    if (sheet) {
+      sheet.innerHTML = [
+        '<tr><td class="first_child">Category</td><td>' + escapeHtml(product.category) + "</td></tr>",
+        '<tr><td class="first_child">Available sizes</td><td>' + escapeHtml(options.sizes.join(", ")) + "</td></tr>",
+        '<tr><td class="first_child">Available colors</td><td>' + escapeHtml(options.colors.join(", ")) + "</td></tr>",
+        '<tr><td class="first_child">Stock</td><td>' + escapeHtml(String(product.stock)) + " units</td></tr>"
+      ].join("");
+    }
+
+    var sheetText = qs("#sheet .product_info_content");
+    if (sheetText) {
+      sheetText.innerHTML = "<p>All options shown here come from the product catalog, so the detail page, wishlist, and checkout stay aligned.</p>";
+    }
+
+    var review = REVIEW_COPY[product.id] || {
+      name: "RSPort customer",
+      date: "June 1, 2026",
+      text: "Good quality, clear sizing, and fast enough for daily training use."
+    };
+    var reviews = qs("#reviews .reviews_wrapper");
+    if (reviews) {
+      reviews.innerHTML = [
+        "<h2>1 review for " + escapeHtml(product.name) + "</h2>",
+        '<div class="reviews_comment_box">',
+        '<div class="comment_thmb"><img src="assets/img/blog/comment2.webp" alt="' + escapeHtml(review.name) + '"></div>',
+        '<div class="comment_text"><div class="reviews_meta">',
+        '<div class="star_rating"><ul><li><a href="#"><i class="ion-ios-star"></i></a></li><li><a href="#"><i class="ion-ios-star"></i></a></li><li><a href="#"><i class="ion-ios-star"></i></a></li><li><a href="#"><i class="ion-ios-star"></i></a></li><li><a href="#"><i class="ion-ios-star"></i></a></li></ul></div>',
+        "<p><strong>" + escapeHtml(review.name) + " </strong>- " + escapeHtml(review.date) + "</p>",
+        "<span>" + escapeHtml(review.text) + "</span>",
+        "</div></div></div>",
+        '<div class="comment_title"><h2>Add a review</h2><p>Your email address will not be published.</p></div>',
+        '<div class="product_review_form"><form action="#"><div class="row"><div class="col-12"><label for="review_comment">Your review</label><textarea name="comment" id="review_comment"></textarea></div><div class="col-lg-6 col-md-6"><label for="author">Name</label><input id="author" type="text"></div><div class="col-lg-6 col-md-6"><label for="email">Email</label><input id="email" type="text"></div></div><button type="submit">Submit</button></form></div>'
+      ].join("");
+    }
+
+    var navProducts = await loadProducts();
+    var currentIndex = navProducts.findIndex(function (entry) {
+      return entry.id === product.id;
+    });
+    var previous = navProducts[(currentIndex + navProducts.length - 1) % navProducts.length];
+    var next = navProducts[(currentIndex + 1) % navProducts.length];
+    var previousLink = qs(".product_nav .prev a", panel);
+    var nextLink = qs(".product_nav .next a", panel);
+    if (previousLink && previous) {
+      previousLink.href = "product-details.html?id=" + encodeURIComponent(previous.id);
+    }
+    if (nextLink && next) {
+      nextLink.href = "product-details.html?id=" + encodeURIComponent(next.id);
+    }
+
+    var related = qs(".related_products .product_carousel");
+    if (related) {
+      related.innerHTML = navProducts
+        .filter(function (entry) {
+          return entry.id !== product.id;
+        })
+        .slice(0, 5)
+        .map(function (entry) {
+          return productCard(entry, true);
+        })
+        .join("");
+    }
+
+    document.addEventListener("click", function (event) {
+      var thumb = event.target.closest("[data-product-image]");
+      if (thumb && gallery && gallery.contains(thumb)) {
+        event.preventDefault();
+        var target = qs("#zoom1", gallery);
+        if (target) {
+          target.src = thumb.dataset.productImage;
+          target.dataset.zoomImage = thumb.dataset.productImage;
+        }
+        qsa(".rsport-thumb-button", gallery).forEach(function (button) {
+          button.classList.toggle("active", button === thumb);
+        });
+        return;
+      }
+
+      var color = event.target.closest(".rsport-color-swatch");
+      if (color && colorVariant && colorVariant.contains(color)) {
+        var mainImage = qs("#zoom1");
+        event.preventDefault();
+        qsa(".rsport-color-swatch", colorVariant).forEach(function (button) {
+          button.classList.toggle("active", button === color);
+        });
+        var selected = qs(".rsport-selected-option", colorVariant);
+        if (selected) {
+          selected.textContent = "Selected: " + color.dataset.color;
+        }
+        if (mainImage) {
+          mainImage.style.filter = color.dataset.filter || "";
+        }
+        return;
+      }
+
+      var size = event.target.closest(".rsport-size-option");
+      if (size && colorVariant && colorVariant.contains(size)) {
+        event.preventDefault();
+        qsa(".rsport-size-option", colorVariant).forEach(function (button) {
+          button.classList.toggle("active", button === size);
+        });
+      }
+    });
+
     var form = qs("form", panel);
     if (form) {
       form.addEventListener("submit", async function (event) {
@@ -418,6 +920,57 @@
         });
         tbody.innerHTML = cartRows(updated.cart);
         renderTotals(updated.cart.totals, qs(".coupon_area"));
+      } catch (error) {
+        notify(error.message, "error");
+      }
+    });
+  }
+
+  function wishlistRows(wishlist) {
+    if (!wishlist.items.length) {
+      return '<tr><td colspan="6"><div class="rsport-empty">Your wishlist is empty. Add a product with the heart button and it will appear here.</div></td></tr>';
+    }
+    return wishlist.items
+      .map(function (product) {
+        return [
+          "<tr>",
+          '<td class="product_remove"><a href="#" data-remove-wishlist="' + escapeHtml(product.id) + '">x</a></td>',
+          '<td class="product_thumb"><a href="product-details.html?id=' + encodeURIComponent(product.id) + '"><img src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '"></a></td>',
+          '<td class="product_name"><a href="product-details.html?id=' + encodeURIComponent(product.id) + '">' + escapeHtml(product.name) + "</a></td>",
+          '<td class="product-price">' + money(product.priceCents) + "</td>",
+          '<td class="product_quantity">' + escapeHtml(product.stockStatus || (product.stock > 0 ? "In Stock" : "Out of Stock")) + "</td>",
+          '<td class="product_total"><a href="#" data-add-to-cart data-product-id="' + escapeHtml(product.id) + '">Add To Cart</a></td>',
+          "</tr>"
+        ].join("");
+      })
+      .join("");
+  }
+
+  async function initWishlistPage() {
+    if (!qs(".wishlist_area")) {
+      return;
+    }
+    var tbody = qs(".wishlist_area tbody");
+    if (!tbody) {
+      return;
+    }
+    var payload = await api("/api/wishlist");
+    tbody.innerHTML = wishlistRows(payload.wishlist);
+    if (tbody.dataset.rsportBound) {
+      return;
+    }
+    tbody.dataset.rsportBound = "true";
+    tbody.addEventListener("click", async function (event) {
+      var remove = event.target.closest("[data-remove-wishlist]");
+      if (!remove) {
+        return;
+      }
+      event.preventDefault();
+      try {
+        var updated = await api("/api/wishlist/items/" + encodeURIComponent(remove.dataset.removeWishlist), {
+          method: "DELETE"
+        });
+        tbody.innerHTML = wishlistRows(updated.wishlist);
       } catch (error) {
         notify(error.message, "error");
       }
@@ -751,8 +1304,7 @@
       }
     });
 
-    var menu = qs(".categories_menu_toggle");
-    if (menu) {
+    qsa(".categories_menu_toggle").forEach(function (menu) {
       menu.innerHTML =
         '<ul class="rsport-category-list">' +
         CATEGORY_LINKS.map(function (category) {
@@ -767,7 +1319,7 @@
         }).join("") +
         "</ul>";
       menu.style.display = "block";
-    }
+    });
   }
 
   function initCategoryNavigation() {
@@ -798,16 +1350,16 @@
       if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
         try {
           window.jQuery(carousel).trigger("destroy.owl.carousel");
-          window.jQuery(carousel).removeClass("owl-loaded owl-hidden");
+          window.jQuery(carousel).removeClass("owl-loaded owl-hidden owl-drag");
         } catch (error) {
           // Old templates may not have initialized the carousel yet.
         }
       }
-      carousel.innerHTML = BLOG_POSTS.slice(0, 5).map(blogCard).join("");
+      carousel.innerHTML = BLOG_POSTS.slice(0, 6).map(blogCard).join("");
       if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
         window.jQuery(carousel).owlCarousel({
           autoplay: false,
-          loop: true,
+          loop: false,
           nav: true,
           items: 3,
           dots: false,
@@ -877,7 +1429,8 @@
       wrapper.innerHTML = [
         '<button type="button" data-social-provider="Google"><span>G</span>' + mode + " with Google</button>",
         '<button type="button" data-social-provider="Facebook"><span>f</span>' + mode + " with Facebook</button>",
-        '<button type="button" data-social-provider="Apple"><span>A</span>' + mode + " with Apple</button>"
+        '<button type="button" data-social-provider="Apple"><span>A</span>' + mode + " with Apple</button>",
+        '<button type="button" data-social-provider="X"><span>X</span>' + mode + " with X</button>"
       ].join("");
       heading.insertAdjacentElement("afterend", wrapper);
     });
@@ -907,12 +1460,14 @@
       await loadMe();
       initSearch();
       initAddToCart();
+      initWishlistCompareQuickView();
       initCategoryNavigation();
       initHomeHeroAndCategories();
       await initShop();
       await hydrateStaticProductCards();
       await initProductDetails();
       await initCartPage();
+      await initWishlistPage();
       await initCheckoutPage();
       initAuthForms();
       initSocialAuthButtons();
