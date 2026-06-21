@@ -93,13 +93,11 @@
   ];
 
   var CATEGORY_LINKS = [
-    { label: "Boxing", href: "shop.html?category=Boxing", detail: "Gloves and fight training" },
-    { label: "Strength", href: "shop.html?category=Strength", detail: "Belts, kettlebells, racks" },
-    { label: "Footwear", href: "shop.html?category=Footwear", detail: "Training shoes and sneakers" },
-    { label: "Cardio", href: "shop.html?category=Cardio", detail: "Jump ropes and conditioning" },
-    { label: "Recovery", href: "shop.html?category=Recovery", detail: "Bands, mobility, reset gear" },
-    { label: "Apparel", href: "shop.html?category=Apparel", detail: "Performance tees and layers" },
-    { label: "Accessories", href: "shop.html?category=Accessories", detail: "Bags, wraps, bottles" }
+    { label: "Strength", href: "shop.html?category=Strength", detail: "Benches, core trainers, and strength gear" },
+    { label: "Apparel", href: "shop.html?category=Apparel", detail: "Performance shirts and training layers" },
+    { label: "Boxing", href: "shop.html?category=Boxing", detail: "Gloves, heavy bags, and strike gear" },
+    { label: "Accessories", href: "shop.html?category=Accessories", detail: "Duffels, bottles, and gym essentials" },
+    { label: "Cardio", href: "shop.html?category=Cardio", detail: "Treadmills, bikes, and conditioning" }
   ];
 
   var COLOR_STYLES = {
@@ -115,45 +113,45 @@
   };
 
   var REVIEW_COPY = {
-    "gloves-pro": {
+    "boxing-gloves-pro": {
       name: "Marta",
       date: "June 4, 2026",
       text: "The wrist support feels secure and the padding is balanced enough for long bag sessions."
     },
-    "strength-belt": {
+    "adjustable-bench": {
       name: "Jakub",
       date: "May 29, 2026",
-      text: "Solid buckle, comfortable fit, and it stays in place during heavier sets."
-    },
-    "training-shoes": {
-      name: "Amelia",
-      date: "May 22, 2026",
-      text: "Stable for lifting but still flexible enough for circuits. Exactly what I wanted."
-    },
-    "jump-rope-speed": {
-      name: "Noah",
-      date: "May 17, 2026",
-      text: "The bearings are smooth and the rope is easy to adjust before warmups."
-    },
-    "resistance-band-set": {
-      name: "Lena",
-      date: "May 10, 2026",
-      text: "Great range of resistance levels for rehab work, warmups, and travel sessions."
+      text: "The frame feels stable, adjusts quickly, and folds neatly back into my training corner."
     },
     "performance-tee": {
+      name: "Amelia",
+      date: "May 22, 2026",
+      text: "The fabric is light, the cut is clean, and it dries quickly after harder sessions."
+    },
+    "elite-duffel-bag": {
+      name: "Noah",
+      date: "May 17, 2026",
+      text: "The separate shoe pocket and bottle storage make after-work training much easier."
+    },
+    "core-trainer": {
+      name: "Lena",
+      date: "May 10, 2026",
+      text: "Compact, smooth, and easy to use for core work without taking over the room."
+    },
+    "heavy-bag-classic": {
       name: "Oskar",
       date: "May 6, 2026",
-      text: "Lightweight fabric, clean cut, and it dries quickly after harder training."
+      text: "The bag has a satisfying weight and stays steady through longer boxing rounds."
     },
-    "kettlebell-16": {
+    "cardio-treadmill": {
       name: "Kacper",
       date: "April 30, 2026",
-      text: "The handle has enough room for two-hand swings and the finish grips well."
+      text: "Quiet enough for home use, simple to fold, and the console is easy to read."
     },
-    "gym-bag-elite": {
+    "recumbent-bike": {
       name: "Zofia",
       date: "April 24, 2026",
-      text: "The separate shoe pocket is genuinely useful and the bag feels sturdy without being bulky."
+      text: "Comfortable for steady cardio, especially on days when I want low-impact training."
     }
   };
 
@@ -190,23 +188,20 @@
 
   function defaultOptionsFor(product) {
     var category = String((product && product.category) || "").toLowerCase();
-    if (category === "footwear") {
-      return { colors: ["Black", "White", "Electric Blue"], sizes: ["40", "41", "42", "43", "44", "45"] };
-    }
     if (category === "apparel") {
-      return { colors: ["Black", "White", "Neon Lime"], sizes: ["S", "M", "L", "XL"] };
+      return { colors: ["White", "Graphite"], sizes: ["S", "M", "L", "XL"] };
     }
     if (category === "boxing") {
-      return { colors: ["Black", "White", "Red", "Navy"], sizes: ["10 oz", "12 oz", "14 oz", "16 oz"] };
+      return { colors: ["Black", "Red", "White"], sizes: ["10 oz", "12 oz", "14 oz", "16 oz"] };
     }
     if (category === "strength") {
-      return { colors: ["Black", "Graphite"], sizes: ["S", "M", "L", "XL"] };
+      return { colors: ["Red", "Graphite", "Neon Lime"], sizes: ["One size"] };
     }
     if (category === "cardio") {
-      return { colors: ["Black", "Red", "Yellow"], sizes: ["Adjustable"] };
+      return { colors: ["Graphite", "Black"], sizes: ["Standard"] };
     }
     if (category === "accessories") {
-      return { colors: ["Black", "Red", "Graphite"], sizes: ["One size"] };
+      return { colors: ["Black", "Red", "Neon Lime"], sizes: ["35 L", "50 L"] };
     }
     return { colors: ["Black", "Graphite"], sizes: ["One size"] };
   }
@@ -220,7 +215,51 @@
   }
 
   function productImages(product) {
-    return unique([product.image, product.secondaryImage]);
+    return unique([product.image, product.secondaryImage].concat(product.gallery || []));
+  }
+
+  function productColorImage(product, color) {
+    var images = productImages(product);
+    var map = {
+      "adjustable-bench": {
+        Red: "assets/img/product/product1.webp",
+        "Neon Lime": "assets/img/product/product2.webp",
+        Graphite: "assets/img/product/product1.webp"
+      },
+      "performance-tee": {
+        White: "assets/img/product/product3.webp",
+        Graphite: "assets/img/custom-p/product5.webp"
+      },
+      "boxing-gloves-pro": {
+        Black: "assets/img/product/product11.webp",
+        Red: "assets/img/product/product5.webp",
+        White: "assets/img/product/product4.webp"
+      },
+      "elite-duffel-bag": {
+        Black: "assets/img/product/product7.webp",
+        Red: "assets/img/product/product6.webp",
+        "Neon Lime": "assets/img/custom-p/product1.webp"
+      },
+      "heavy-bag-classic": {
+        Black: "assets/img/product/product8.webp",
+        Red: "assets/img/custom-p/product7.webp"
+      },
+      "core-trainer": {
+        Graphite: "assets/img/product/product9.webp",
+        Red: "assets/img/product/product10.webp",
+        "Neon Lime": "assets/img/custom-p/product8.webp"
+      },
+      "cardio-treadmill": {
+        Graphite: "assets/img/product/product12.webp",
+        Black: "assets/img/product/product12.webp"
+      },
+      "recumbent-bike": {
+        Black: "assets/img/product/product16.webp",
+        Graphite: "assets/img/product/product14.webp"
+      }
+    };
+    var image = map[product.id] && map[product.id][color];
+    return image && images.includes(image) ? image : "";
   }
 
   function findLoadedProduct(productId) {
@@ -336,20 +375,65 @@
     ].join("");
   }
 
+  function sortedShopProducts(products) {
+    var selected = (qs("#short") || {}).value || "1";
+    var sorted = products.slice();
+    if (selected === "3") {
+      sorted.reverse();
+    } else if (selected === "4") {
+      sorted.sort(function (a, b) {
+        return a.priceCents - b.priceCents;
+      });
+    } else if (selected === "5") {
+      sorted.sort(function (a, b) {
+        return b.priceCents - a.priceCents;
+      });
+    } else if (selected === "6") {
+      sorted.sort(function (a, b) {
+        return b.name.localeCompare(a.name);
+      });
+    } else if (selected === "2") {
+      sorted.sort(function (a, b) {
+        return Number(b.featured) - Number(a.featured) || b.stock - a.stock;
+      });
+    } else {
+      sorted.sort(function (a, b) {
+        return Number(b.featured) - Number(a.featured) || a.name.localeCompare(b.name);
+      });
+    }
+    return sorted;
+  }
+
+  function renderShopProducts(products) {
+    var wrapper = qs(".shop_wrapper");
+    if (!wrapper) {
+      return;
+    }
+    var sorted = sortedShopProducts(products);
+    wrapper.innerHTML = sorted.length
+      ? sorted.map(productCard).join("")
+      : '<div class="col-12"><div class="rsport-empty">No products match your search.</div></div>';
+    var amount = qs(".page_amount p");
+    if (amount) {
+      amount.textContent = sorted.length
+        ? "Showing 1-" + sorted.length + " of " + sorted.length + " results"
+        : "No products found";
+    }
+  }
+
   async function initShop() {
     var wrapper = qs(".shop_wrapper");
     if (!wrapper) {
       return;
     }
     var products = await loadProducts();
-    wrapper.innerHTML = products.length
-      ? products.map(productCard).join("")
-      : '<div class="col-12"><div class="rsport-empty">No products match your search.</div></div>';
-    var amount = qs(".page_amount p");
-    if (amount) {
-      amount.textContent = products.length
-        ? "Showing 1-" + products.length + " of " + products.length + " results"
-        : "No products found";
+    renderShopProducts(products);
+    var sort = qs("#short");
+    if (sort && !sort.dataset.rsportBound) {
+      sort.dataset.rsportBound = "true";
+      sort.addEventListener("change", function () {
+        renderShopProducts(products);
+      });
     }
   }
 
@@ -679,8 +763,9 @@
         options.colors
           .map(function (color, index) {
             var style = COLOR_STYLES[color] || { hex: "#9aa4af", filter: "" };
+            var variantImage = productColorImage(product, color);
             return [
-              '<button type="button" class="rsport-color-swatch ' + (index === 0 ? "active" : "") + '" data-color="' + escapeHtml(color) + '" data-filter="' + escapeHtml(style.filter) + '" title="' + escapeHtml(color) + '">',
+              '<button type="button" class="rsport-color-swatch ' + (index === 0 ? "active" : "") + '" data-color="' + escapeHtml(color) + '" data-filter="' + escapeHtml(style.filter) + '" data-image="' + escapeHtml(variantImage) + '" title="' + escapeHtml(color) + '">',
               '<span style="background:' + escapeHtml(style.hex) + '"></span>',
               "</button>"
             ].join("");
@@ -796,6 +881,7 @@
         if (target) {
           target.src = thumb.dataset.productImage;
           target.dataset.zoomImage = thumb.dataset.productImage;
+          target.style.filter = "";
         }
         qsa(".rsport-thumb-button", gallery).forEach(function (button) {
           button.classList.toggle("active", button === thumb);
@@ -815,7 +901,16 @@
           selected.textContent = "Selected: " + color.dataset.color;
         }
         if (mainImage) {
-          mainImage.style.filter = color.dataset.filter || "";
+          if (color.dataset.image) {
+            mainImage.src = color.dataset.image;
+            mainImage.dataset.zoomImage = color.dataset.image;
+            mainImage.style.filter = "";
+            qsa(".rsport-thumb-button", gallery).forEach(function (button) {
+              button.classList.toggle("active", button.dataset.productImage === color.dataset.image);
+            });
+          } else {
+            mainImage.style.filter = color.dataset.filter || "";
+          }
         }
         return;
       }
@@ -1320,6 +1415,82 @@
         "</ul>";
       menu.style.display = "block";
     });
+
+    qsa(".categories_menu").forEach(function (menu) {
+      var title = qs(".categories_title", menu);
+      if (!title || title.dataset.rsportBound) {
+        return;
+      }
+      title.dataset.rsportBound = "true";
+      title.setAttribute("role", "button");
+      title.setAttribute("tabindex", "0");
+      title.setAttribute("aria-expanded", "true");
+      var toggle = function () {
+        var collapsed = menu.classList.toggle("rsport-categories-collapsed");
+        title.setAttribute("aria-expanded", String(!collapsed));
+      };
+      title.addEventListener("click", toggle);
+      title.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggle();
+        }
+      });
+    });
+  }
+
+  function initPromoBanners() {
+    var promos = [
+      {
+        href: "shop.html?category=Apparel",
+        title: "Performance Training Apparel",
+        label: "From EUR 29.99",
+        alt: "Performance training apparel"
+      },
+      {
+        href: "shop.html?category=Boxing",
+        title: "Boxing Gear",
+        label: "Gloves and bags",
+        alt: "Boxing gloves and combat training gear"
+      },
+      {
+        href: "shop.html?category=Cardio",
+        title: "Cardio Equipment",
+        label: "Run and ride",
+        alt: "Cardio training equipment"
+      }
+    ];
+    qsa(".banner_area_two .single_banner").forEach(function (banner, index) {
+      var promo = promos[index];
+      if (!promo) {
+        return;
+      }
+      var link = qs(".banner_thumb > a", banner);
+      var image = qs("img", banner);
+      var title = qs(".banner_text h4", banner);
+      var label = qs(".banner_text p", banner);
+      if (link) {
+        link.href = promo.href;
+      }
+      if (image) {
+        image.alt = promo.alt;
+      }
+      if (title) {
+        title.textContent = promo.title;
+      }
+      if (label) {
+        label.textContent = promo.label;
+      }
+    });
+
+    var sideBanner = qs(".product_four_left .single_banner .banner_thumb > a");
+    if (sideBanner) {
+      sideBanner.href = "shop.html?category=Strength";
+      var sideImage = qs("img", sideBanner);
+      if (sideImage) {
+        sideImage.alt = "Strength training deals";
+      }
+    }
   }
 
   function initCategoryNavigation() {
@@ -1358,8 +1529,10 @@
       carousel.innerHTML = BLOG_POSTS.slice(0, 6).map(blogCard).join("");
       if (window.jQuery && window.jQuery.fn && window.jQuery.fn.owlCarousel) {
         window.jQuery(carousel).owlCarousel({
-          autoplay: false,
-          loop: false,
+          autoplay: true,
+          autoplayTimeout: 5200,
+          autoplayHoverPause: true,
+          loop: true,
           nav: true,
           items: 3,
           dots: false,
@@ -1463,6 +1636,7 @@
       initWishlistCompareQuickView();
       initCategoryNavigation();
       initHomeHeroAndCategories();
+      initPromoBanners();
       await initShop();
       await hydrateStaticProductCards();
       await initProductDetails();

@@ -2,27 +2,83 @@
   "schemaVersion": 1,
   "products": [
     {
-      "id": "gloves-pro",
-      "name": "RSPort Pro Boxing Gloves",
-      "slug": "rsport-pro-boxing-gloves",
-      "category": "Boxing",
-      "description": "Durable sparring gloves with wrist support, breathable lining, and balanced padding for daily training.",
-      "priceCents": 7999,
-      "compareAtCents": 8999,
-      "stock": 28,
+      "id": "adjustable-bench",
+      "name": "Adjustable Strength Bench",
+      "slug": "adjustable-strength-bench",
+      "category": "Strength",
+      "description": "Multi-position training bench for presses, rows, core work, and compact home strength sessions.",
+      "priceCents": 12999,
+      "compareAtCents": 14999,
+      "stock": 14,
       "image": "assets/img/product/product1.webp",
       "secondaryImage": "assets/img/product/product2.webp",
       "gallery": [
-        "assets/img/product/productbig.webp",
-        "assets/img/product/productbig1.webp",
-        "assets/img/product/productbig2.webp"
+        "assets/img/product/product1.webp",
+        "assets/img/product/product2.webp"
+      ],
+      "options": {
+        "colors": [
+          "Red",
+          "Neon Lime"
+        ],
+        "sizes": [
+          "Flat",
+          "Incline",
+          "Decline"
+        ]
+      },
+      "featured": true
+    },
+    {
+      "id": "performance-tee",
+      "name": "RSPort Performance Training Tee",
+      "slug": "rsport-performance-training-tee",
+      "category": "Apparel",
+      "description": "Lightweight moisture-wicking shirt for gym sessions, classes, running warmups, and everyday training.",
+      "priceCents": 2999,
+      "compareAtCents": 3499,
+      "stock": 90,
+      "image": "assets/img/product/product3.webp",
+      "secondaryImage": "assets/img/custom-p/product5.webp",
+      "gallery": [
+        "assets/img/product/product3.webp",
+        "assets/img/custom-p/product5.webp"
+      ],
+      "options": {
+        "colors": [
+          "White",
+          "Graphite"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ]
+      },
+      "featured": true
+    },
+    {
+      "id": "boxing-gloves-pro",
+      "name": "RSPort Pro Boxing Gloves",
+      "slug": "rsport-pro-boxing-gloves",
+      "category": "Boxing",
+      "description": "Durable sparring gloves with wrist support, breathable lining, and balanced padding for daily bag work.",
+      "priceCents": 7999,
+      "compareAtCents": 8999,
+      "stock": 28,
+      "image": "assets/img/product/product11.webp",
+      "secondaryImage": "assets/img/product/product5.webp",
+      "gallery": [
+        "assets/img/product/product11.webp",
+        "assets/img/product/product5.webp",
+        "assets/img/product/product4.webp"
       ],
       "options": {
         "colors": [
           "Black",
-          "White",
           "Red",
-          "Navy"
+          "White"
         ],
         "sizes": [
           "10 oz",
@@ -34,188 +90,26 @@
       "featured": true
     },
     {
-      "id": "strength-belt",
-      "name": "CoreLift Strength Belt",
-      "slug": "corelift-strength-belt",
-      "category": "Strength",
-      "description": "Supportive lifting belt with reinforced stitching and a quick-adjust steel buckle.",
-      "priceCents": 5499,
-      "compareAtCents": 6499,
-      "stock": 35,
-      "image": "assets/img/product/product3.webp",
-      "secondaryImage": "assets/img/product/product4.webp",
-      "gallery": [
-        "assets/img/product/productbig1.webp",
-        "assets/img/product/productbig2.webp"
-      ],
-      "options": {
-        "colors": [
-          "Black",
-          "Graphite"
-        ],
-        "sizes": [
-          "S",
-          "M",
-          "L",
-          "XL"
-        ]
-      },
-      "featured": true
-    },
-    {
-      "id": "training-shoes",
-      "name": "Velocity Training Shoes",
-      "slug": "velocity-training-shoes",
-      "category": "Footwear",
-      "description": "Stable gym trainers with flexible grip for lifting, circuits, and indoor conditioning.",
-      "priceCents": 8999,
-      "compareAtCents": 10499,
-      "stock": 20,
-      "image": "assets/img/product/product5.webp",
-      "secondaryImage": "assets/img/product/product6.webp",
-      "gallery": [
-        "assets/img/product/productbig2.webp",
-        "assets/img/product/productbig3.webp"
-      ],
-      "options": {
-        "colors": [
-          "Black",
-          "White",
-          "Electric Blue"
-        ],
-        "sizes": [
-          "40",
-          "41",
-          "42",
-          "43",
-          "44",
-          "45"
-        ]
-      },
-      "featured": true
-    },
-    {
-      "id": "jump-rope-speed",
-      "name": "SpeedForm Jump Rope",
-      "slug": "speedform-jump-rope",
-      "category": "Cardio",
-      "description": "Adjustable steel-cable rope with smooth bearings for quick footwork and conditioning.",
-      "priceCents": 2499,
-      "compareAtCents": 2999,
-      "stock": 70,
-      "image": "assets/img/product/product7.webp",
-      "secondaryImage": "assets/img/product/product8.webp",
-      "gallery": [
-        "assets/img/product/productbig3.webp"
-      ],
-      "options": {
-        "colors": [
-          "Black",
-          "Red",
-          "Yellow"
-        ],
-        "sizes": [
-          "Adjustable"
-        ]
-      },
-      "featured": false
-    },
-    {
-      "id": "resistance-band-set",
-      "name": "Resistance Band Set",
-      "slug": "resistance-band-set",
-      "category": "Recovery",
-      "description": "Five resistance levels with door anchor, handles, and compact carry bag.",
-      "priceCents": 3499,
-      "compareAtCents": 3999,
-      "stock": 58,
-      "image": "assets/img/product/product9.webp",
-      "secondaryImage": "assets/img/product/product10.webp",
-      "gallery": [
-        "assets/img/product/productbig5.webp"
-      ],
-      "options": {
-        "colors": [
-          "Multi"
-        ],
-        "sizes": [
-          "Set of 5"
-        ]
-      },
-      "featured": false
-    },
-    {
-      "id": "performance-tee",
-      "name": "RSPort Performance Tee",
-      "slug": "rsport-performance-tee",
-      "category": "Apparel",
-      "description": "Lightweight moisture-wicking shirt for gym sessions and everyday training.",
-      "priceCents": 2999,
-      "compareAtCents": 3499,
-      "stock": 90,
-      "image": "assets/img/product/product11.webp",
-      "secondaryImage": "assets/img/product/product12.webp",
-      "gallery": [
-        "assets/img/product/productbig.webp"
-      ],
-      "options": {
-        "colors": [
-          "Black",
-          "White",
-          "Neon Lime"
-        ],
-        "sizes": [
-          "S",
-          "M",
-          "L",
-          "XL"
-        ]
-      },
-      "featured": true
-    },
-    {
-      "id": "kettlebell-16",
-      "name": "Cast Iron Kettlebell 16kg",
-      "slug": "cast-iron-kettlebell-16kg",
-      "category": "Strength",
-      "description": "Powder-coated kettlebell with a wide handle for swings, cleans, and carries.",
-      "priceCents": 6999,
-      "compareAtCents": 7999,
-      "stock": 16,
-      "image": "assets/img/product/product13.webp",
-      "secondaryImage": "assets/img/product/product14.webp",
-      "gallery": [
-        "assets/img/product/productbig1.webp"
-      ],
-      "options": {
-        "colors": [
-          "Black"
-        ],
-        "sizes": [
-          "16 kg"
-        ]
-      },
-      "featured": false
-    },
-    {
-      "id": "gym-bag-elite",
+      "id": "elite-duffel-bag",
       "name": "Elite Training Duffel Bag",
       "slug": "elite-training-duffel-bag",
       "category": "Accessories",
-      "description": "Water-resistant gym bag with shoe compartment, padded strap, and quick-access pockets.",
+      "description": "Water-resistant gym bag with shoe compartment, padded strap, bottle pocket, and quick-access storage.",
       "priceCents": 5999,
       "compareAtCents": 6999,
       "stock": 25,
-      "image": "assets/img/product/product15.webp",
-      "secondaryImage": "assets/img/product/product16.webp",
+      "image": "assets/img/product/product7.webp",
+      "secondaryImage": "assets/img/product/product6.webp",
       "gallery": [
-        "assets/img/product/productbig2.webp"
+        "assets/img/product/product7.webp",
+        "assets/img/product/product6.webp",
+        "assets/img/custom-p/product4.webp"
       ],
       "options": {
         "colors": [
           "Black",
           "Red",
-          "Graphite"
+          "Neon Lime"
         ],
         "sizes": [
           "35 L",
@@ -223,6 +117,113 @@
         ]
       },
       "featured": true
+    },
+    {
+      "id": "heavy-bag-classic",
+      "name": "Classic Heavy Boxing Bag",
+      "slug": "classic-heavy-boxing-bag",
+      "category": "Boxing",
+      "description": "Freestanding heavy bag for strikes, conditioning rounds, and boxing technique drills at home.",
+      "priceCents": 11999,
+      "compareAtCents": 13999,
+      "stock": 18,
+      "image": "assets/img/product/product8.webp",
+      "secondaryImage": "assets/img/custom-p/product7.webp",
+      "gallery": [
+        "assets/img/product/product8.webp",
+        "assets/img/custom-p/product7.webp",
+        "assets/img/product/productbig1.webp"
+      ],
+      "options": {
+        "colors": [
+          "Black",
+          "Red"
+        ],
+        "sizes": [
+          "120 cm",
+          "150 cm"
+        ]
+      },
+      "featured": false
+    },
+    {
+      "id": "core-trainer",
+      "name": "CoreForm Ab Trainer",
+      "slug": "coreform-ab-trainer",
+      "category": "Strength",
+      "description": "Compact ab trainer with padded rollers for controlled core work, warmups, and accessory sessions.",
+      "priceCents": 4499,
+      "compareAtCents": 5499,
+      "stock": 32,
+      "image": "assets/img/product/product9.webp",
+      "secondaryImage": "assets/img/product/product10.webp",
+      "gallery": [
+        "assets/img/product/product9.webp",
+        "assets/img/product/product10.webp",
+        "assets/img/custom-p/product8.webp"
+      ],
+      "options": {
+        "colors": [
+          "Graphite",
+          "Red",
+          "Neon Lime"
+        ],
+        "sizes": [
+          "One size"
+        ]
+      },
+      "featured": false
+    },
+    {
+      "id": "cardio-treadmill",
+      "name": "PulseRun Folding Treadmill",
+      "slug": "pulserun-folding-treadmill",
+      "category": "Cardio",
+      "description": "Space-saving treadmill with clear console feedback for walking, running, and interval sessions.",
+      "priceCents": 39999,
+      "compareAtCents": 44999,
+      "stock": 9,
+      "image": "assets/img/product/product12.webp",
+      "secondaryImage": "assets/img/product/product12.webp",
+      "gallery": [
+        "assets/img/product/product12.webp"
+      ],
+      "options": {
+        "colors": [
+          "Graphite"
+        ],
+        "sizes": [
+          "Standard"
+        ]
+      },
+      "featured": true
+    },
+    {
+      "id": "recumbent-bike",
+      "name": "ComfortRide Recumbent Bike",
+      "slug": "comfortride-recumbent-bike",
+      "category": "Cardio",
+      "description": "Low-impact exercise bike with supportive seat and easy controls for steady indoor cardio.",
+      "priceCents": 24999,
+      "compareAtCents": 27999,
+      "stock": 11,
+      "image": "assets/img/product/product16.webp",
+      "secondaryImage": "assets/img/product/product14.webp",
+      "gallery": [
+        "assets/img/product/product16.webp",
+        "assets/img/product/product14.webp",
+        "assets/img/product/product15.webp"
+      ],
+      "options": {
+        "colors": [
+          "Black",
+          "Graphite"
+        ],
+        "sizes": [
+          "Standard"
+        ]
+      },
+      "featured": false
     }
   ],
   "coupons": [

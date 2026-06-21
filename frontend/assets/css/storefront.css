@@ -1397,3 +1397,518 @@ button:hover,
         padding: 18px;
     }
 }
+
+/* Final readability and interaction pass */
+:root {
+    --rsport-panel: rgba(247, 251, 255, 0.9);
+    --rsport-panel-strong: rgba(255, 255, 255, 0.96);
+    --rsport-dark: #071018;
+    --rsport-text: #172330;
+    --rsport-text-soft: #40515f;
+}
+
+body::before {
+    background:
+        linear-gradient(120deg, rgba(3, 7, 11, 0.88), rgba(6, 17, 25, 0.74), rgba(14, 10, 24, 0.84)),
+        url("../img/bg/banner7.webp") center / cover no-repeat !important;
+    animation: none !important;
+}
+
+body::after {
+    opacity: 0.5;
+    background:
+        repeating-linear-gradient(115deg, transparent 0 72px, rgba(44, 246, 211, 0.1) 73px, transparent 76px),
+        repeating-linear-gradient(25deg, transparent 0 118px, rgba(255, 209, 102, 0.08) 119px, transparent 122px),
+        linear-gradient(90deg, transparent, rgba(255, 65, 109, 0.12), transparent) !important;
+    animation: rsportEnergyLines 24s linear infinite !important;
+}
+
+.mobile-menu-btn,
+.slider_area .owl-nav button,
+.blog_column3 .owl-nav button,
+.product_column1 .owl-nav button,
+.product_column3 .owl-nav button,
+.product_column4 .owl-nav button {
+    display: inline-grid !important;
+    place-items: center;
+    color: #fff !important;
+    background: rgba(7, 16, 24, 0.84) !important;
+    border: 1px solid rgba(44, 246, 211, 0.32) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24) !important;
+}
+
+#mobile-menu.offcanvas {
+    color: #f7fbff !important;
+    background:
+        linear-gradient(155deg, rgba(5, 10, 16, 0.98), rgba(11, 24, 34, 0.98)),
+        url("../img/bg/banner1.webp") center / cover no-repeat !important;
+}
+
+#mobile-menu .offcanvas-header,
+#mobile-menu .offcanvas-body {
+    background: transparent !important;
+}
+
+#mobile-menu .btn-close {
+    width: 42px;
+    height: 42px;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    filter: invert(1);
+    opacity: 1;
+    box-shadow: none !important;
+}
+
+#mobile-menu .offcanvas_main_menu li a,
+#mobile-menu .offcanvas_footer a,
+#mobile-menu .offcanvas_footer p,
+#mobile-menu .top_right ul li a {
+    color: #f7fbff !important;
+    text-shadow: none !important;
+}
+
+#mobile-menu .offcanvas_main_menu li a {
+    display: block;
+    padding: 14px 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 8px;
+}
+
+#mobile-menu .offcanvas_main_menu li a:hover,
+#mobile-menu .offcanvas_main_menu li a:focus {
+    color: var(--rsport-dark) !important;
+    background: #f7fbff !important;
+}
+
+#mobile-menu .search_box input {
+    color: var(--rsport-dark) !important;
+    background: #fff !important;
+}
+
+#mobile-menu .search_box button {
+    min-width: 48px;
+    background: var(--rsport-green) !important;
+    color: var(--rsport-dark) !important;
+}
+
+.slider_s_four .single_slider::after {
+    background:
+        linear-gradient(90deg, rgba(3, 7, 11, 0.9), rgba(3, 7, 11, 0.5), rgba(3, 7, 11, 0.18)) !important;
+}
+
+.slider_c_four {
+    padding: clamp(24px, 4vw, 42px) !important;
+    background: rgba(4, 10, 16, 0.58) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slider_c_four h1,
+.slider_c_four h2,
+.slider_c_four p {
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.38);
+}
+
+.categories_menu {
+    overflow: hidden !important;
+}
+
+.categories_title {
+    cursor: pointer;
+    user-select: none;
+}
+
+.categories_title .categori_toggle,
+.categories_title h2 {
+    color: #f7fbff !important;
+}
+
+.categories_menu.rsport-categories-collapsed .categories_menu_toggle {
+    display: none !important;
+}
+
+.categories_menu_toggle {
+    max-height: 460px !important;
+    overflow: auto !important;
+}
+
+.rsport-category-link {
+    display: grid !important;
+    gap: 6px;
+    min-height: 84px;
+    padding: 18px !important;
+    color: #f7fbff !important;
+    background: rgba(4, 10, 16, 0.72) !important;
+    align-content: center;
+    line-height: 1.35 !important;
+}
+
+.rsport-category-link span,
+.rsport-category-link small {
+    position: relative;
+    z-index: 1;
+}
+
+.rsport-category-link span {
+    color: inherit !important;
+}
+
+.rsport-category-link small {
+    color: rgba(247, 251, 255, 0.74) !important;
+    line-height: 1.45 !important;
+}
+
+.rsport-category-link:hover,
+.rsport-category-link:focus {
+    color: var(--rsport-dark) !important;
+    background: #f7fbff !important;
+}
+
+.rsport-category-link:hover small,
+.rsport-category-link:focus small {
+    color: var(--rsport-text-soft) !important;
+}
+
+.banner_thumb {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.banner_thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(7, 16, 24, 0.78), rgba(7, 16, 24, 0.12)) !important;
+}
+
+.banner_text {
+    z-index: 1;
+    left: 22px !important;
+    right: 22px;
+}
+
+.banner_text h4,
+.banner_text p {
+    line-height: 1.18 !important;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.44);
+}
+
+.shop_toolbar_wrapper,
+.single_product,
+.single_blog,
+.account_form,
+.coupon_code,
+.table_desc,
+.product_d_inner,
+.product-details-tab,
+.product_d_right form,
+.rsport-payment-box,
+.rsport-blog-detail,
+.contact_message,
+.contact_info {
+    color: var(--rsport-text) !important;
+    background: var(--rsport-panel) !important;
+}
+
+.shop_toolbar_wrapper {
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px !important;
+}
+
+.shop_toolbar_wrapper .page_amount p,
+.niceselect_option .nice-select,
+.nice-select .current,
+.nice-select .list,
+.nice-select .option {
+    color: var(--rsport-text) !important;
+}
+
+.niceselect_option .nice-select,
+.nice-select .list {
+    background: var(--rsport-panel-strong) !important;
+    border-color: rgba(7, 16, 24, 0.16) !important;
+}
+
+.nice-select .option:hover,
+.nice-select .option.focus,
+.nice-select .option.selected.focus {
+    color: var(--rsport-dark) !important;
+    background: rgba(44, 246, 211, 0.16) !important;
+}
+
+.shop_toolbar_btn button {
+    width: 42px;
+    height: 42px;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(7, 16, 24, 0.16) !important;
+    box-shadow: none !important;
+}
+
+.shop_toolbar_btn button.active,
+.shop_toolbar_btn button:hover {
+    background-color: var(--rsport-coral) !important;
+    border-color: var(--rsport-coral) !important;
+}
+
+.product_content,
+.grid_content,
+.list_content {
+    padding: 24px !important;
+    color: var(--rsport-text) !important;
+    background: #f7fbff !important;
+}
+
+.product_name {
+    margin-bottom: 12px !important;
+    line-height: 1.28 !important;
+}
+
+.product_name a,
+.post_title a,
+.blog_header h1,
+.section_title h2,
+.customer_login h2,
+.product_d_right h1,
+.product_d_info h2,
+.product_d_info h3 {
+    color: var(--rsport-dark) !important;
+}
+
+.product_name a {
+    overflow-wrap: anywhere;
+}
+
+.price_box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: baseline;
+}
+
+.shop_wrapper .single_product,
+.product_area .single_product {
+    background: #f7fbff !important;
+    opacity: 1 !important;
+    animation: none !important;
+}
+
+.shop_wrapper .product_thumb,
+.product_area .product_thumb {
+    background: #f7fbff !important;
+}
+
+.shop_wrapper .product_thumb img,
+.product_area .product_thumb img {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.shop_wrapper .product_name a,
+.product_area .product_name a {
+    color: var(--rsport-dark) !important;
+}
+
+.shop_wrapper .product_name a:hover,
+.product_area .product_name a:hover {
+    color: var(--rsport-coral) !important;
+}
+
+.sidebar_widget .widget_list {
+    padding: 20px !important;
+    color: #f7fbff !important;
+    background: rgba(7, 16, 24, 0.86) !important;
+    border: 1px solid rgba(44, 246, 211, 0.18) !important;
+    border-radius: 8px;
+}
+
+.sidebar_widget .widget_list h3,
+.sidebar_widget .widget_list a,
+.sidebar_widget .widget_list span,
+.sidebar_widget .widget_filter form input {
+    color: #f7fbff !important;
+}
+
+.sidebar_widget .widget_list a:hover {
+    color: var(--rsport-green) !important;
+}
+
+.sidebar_widget .widget_filter form button {
+    color: #fff !important;
+}
+
+.single_blog .blog_content {
+    padding: 28px !important;
+    color: var(--rsport-text) !important;
+    background: rgba(247, 251, 255, 0.88) !important;
+}
+
+.single_blog .post_title {
+    margin-bottom: 14px !important;
+    line-height: 1.28 !important;
+}
+
+.single_blog .post_date,
+.single_blog .post_desc {
+    color: var(--rsport-text-soft) !important;
+}
+
+.single_blog .btn_more {
+    margin-top: 24px;
+}
+
+.single_blog .btn_more a,
+.btn_more a {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 22px !important;
+    line-height: 1.1 !important;
+}
+
+.rsport-blog-detail {
+    max-width: 980px;
+    margin-inline: auto;
+    padding: clamp(28px, 5vw, 58px) !important;
+    color: var(--rsport-text) !important;
+    background: rgba(247, 251, 255, 0.94) !important;
+}
+
+.rsport-blog-detail .post_date,
+.rsport-blog-detail p,
+.rsport-blog-detail .rsport-lead {
+    color: var(--rsport-text-soft) !important;
+}
+
+.rsport-blog-detail .rsport-lead,
+.rsport-blog-detail p {
+    max-width: 820px;
+}
+
+.product_details,
+.product_d_info,
+.related_products,
+.shop_area,
+.blog_page_section,
+.blog_details {
+    color: var(--rsport-text);
+}
+
+.product_d_right form {
+    padding: clamp(26px, 4vw, 40px) !important;
+}
+
+.product_desc p,
+.product_variant label,
+.product_variant.quantity label,
+.product_meta,
+.product_meta a,
+.product_ratting .review a,
+.rsport-selected-option,
+.rsport-options-line {
+    color: var(--rsport-text-soft) !important;
+}
+
+.product_variant.color h3,
+.product_variant.color label,
+.product_d_action ul li a {
+    color: var(--rsport-dark) !important;
+}
+
+.product_info_button .nav-link {
+    min-height: 46px;
+    padding: 12px 18px !important;
+    color: var(--rsport-dark) !important;
+    background: rgba(7, 16, 24, 0.06) !important;
+    border: 1px solid rgba(7, 16, 24, 0.12) !important;
+    box-shadow: none !important;
+}
+
+.product_info_button .nav-link.active,
+.product_info_button .nav-link:hover {
+    color: #fff !important;
+    background: var(--rsport-dark) !important;
+}
+
+.product_d_inner .tab-content,
+.product_info_content,
+.product_d_table,
+.reviews_wrapper,
+.product_review_form {
+    color: var(--rsport-text) !important;
+}
+
+.product_info_content p,
+.reviews_meta p,
+.reviews_meta span,
+.comment_title p,
+.product_review_form label,
+.product_d_table table td {
+    color: var(--rsport-text-soft) !important;
+}
+
+.reviews_comment_box,
+.product_d_table table {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border: 1px solid rgba(7, 16, 24, 0.12) !important;
+    border-radius: 8px;
+}
+
+.product_d_table table td.first_child {
+    color: var(--rsport-dark) !important;
+    font-weight: 900;
+}
+
+.rsport-color-swatch:hover,
+.rsport-size-option:hover,
+.rsport-thumb-button:hover {
+    transform: translateY(-2px);
+}
+
+.rsport-thumb-button,
+.rsport-color-swatch,
+.rsport-size-option {
+    color: var(--rsport-dark) !important;
+}
+
+.wishlist_area .table_desc,
+.shopping_cart_area .table_desc {
+    background: var(--rsport-panel-strong) !important;
+}
+
+.wishlist_area .product_total a,
+.shopping_cart_area .product_total a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 16px !important;
+}
+
+@keyframes rsportEnergyLines {
+    from {
+        background-position: 0 0, 0 0, -45vw 0;
+    }
+    to {
+        background-position: 220px 130px, -180px 120px, 120vw 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .shop_toolbar_wrapper {
+        align-items: stretch;
+    }
+
+    .rsport-category-link {
+        min-height: 74px;
+    }
+
+    .product_content,
+    .grid_content,
+    .list_content,
+    .single_blog .blog_content {
+        padding: 20px !important;
+    }
+}
