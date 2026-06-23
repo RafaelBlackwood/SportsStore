@@ -432,6 +432,17 @@
     mainImage.style.filter = filter || "";
   }
 
+  function setProductDetailSizeState(gallery, size) {
+    var mainImage = qs("#zoom1", gallery || document);
+    var wrapper = qs(".zoomWrapper.single-zoom", gallery || document);
+    if (mainImage) {
+      mainImage.dataset.variantSize = size || "";
+    }
+    if (wrapper) {
+      wrapper.dataset.variantSize = size || "";
+    }
+  }
+
   function fallbackConfig() {
     return {
       currency: "eur",
@@ -1092,8 +1103,8 @@
     var gallery = qs(".product-details-tab");
     if (gallery) {
       gallery.innerHTML = [
-        '<div id="img-1" class="zoomWrapper single-zoom">',
-        '<img id="zoom1" src="' + escapeHtml(images[0]) + '" data-zoom-image="' + escapeHtml(images[0]) + '" alt="' + escapeHtml(product.name) + '">',
+        '<div id="img-1" class="zoomWrapper single-zoom" data-variant-size="' + escapeHtml(options.sizes[0] || "") + '">',
+        '<img id="zoom1" src="' + escapeHtml(images[0]) + '" data-zoom-image="' + escapeHtml(images[0]) + '" data-variant-size="' + escapeHtml(options.sizes[0] || "") + '" alt="' + escapeHtml(product.name) + '">',
         "</div>",
         '<div class="single-zoom-thumb">',
         '<ul class="rsport-product-thumbs">',
@@ -1291,10 +1302,7 @@
         var fallbackImage = activeColor ? activeColor.dataset.image : "";
         var fallbackFilter = activeColor ? activeColor.dataset.filter : "";
         updateProductDetailImage(product, gallery, productSizeImage(product, size.dataset.size) || fallbackImage, fallbackFilter);
-        var mainImage = qs("#zoom1", gallery || document);
-        if (mainImage) {
-          mainImage.dataset.variantSize = size.dataset.size;
-        }
+        setProductDetailSizeState(gallery, size.dataset.size);
       }
     });
 
