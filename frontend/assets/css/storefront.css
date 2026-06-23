@@ -1912,3 +1912,354 @@ body::after {
         padding: 20px !important;
     }
 }
+
+/* Final polish layer: contrast, z-index, and stale-template resilience. */
+.header_top .search_box form input,
+.search_box form input,
+#mobile-menu .search_box input,
+.widget_search form input,
+.niceselect_option .nice-select,
+.nice-select .current {
+    color: #071018 !important;
+    background: #ffffff !important;
+    border-color: rgba(44, 246, 211, 0.35) !important;
+    text-shadow: none !important;
+}
+
+.header_top .search_box form input::placeholder,
+.search_box form input::placeholder,
+#mobile-menu .search_box input::placeholder,
+.widget_search form input::placeholder {
+    color: #52616d !important;
+    opacity: 1 !important;
+}
+
+.top_right,
+.top_right > ul,
+.top_right > ul > li,
+.main_header,
+.header_top,
+.main_menu_area {
+    position: relative;
+    z-index: 10020 !important;
+    overflow: visible !important;
+}
+
+.dropdown_currency,
+.dropdown_links,
+.dropdown_language,
+.top_right .dropdown_links {
+    z-index: 10040 !important;
+    background: #ffffff !important;
+    color: #071018 !important;
+    border: 1px solid rgba(7, 16, 24, 0.12) !important;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22) !important;
+}
+
+.dropdown_currency li a,
+.dropdown_links li a,
+.dropdown_language li a {
+    color: #071018 !important;
+}
+
+.dropdown_currency li a:hover,
+.dropdown_links li a:hover,
+.dropdown_language li a:hover {
+    color: #ff334f !important;
+    background: #eafff9 !important;
+}
+
+.shop_toolbar_wrapper,
+.niceselect_option,
+.nice-select {
+    position: relative;
+    z-index: 80 !important;
+    overflow: visible !important;
+}
+
+.nice-select.open,
+.nice-select.open .list,
+.nice-select .list {
+    z-index: 10050 !important;
+}
+
+.nice-select .list {
+    color: #071018 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(7, 16, 24, 0.14) !important;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28) !important;
+}
+
+.nice-select .option {
+    color: #071018 !important;
+}
+
+.nice-select .option:hover,
+.nice-select .option.focus,
+.nice-select .option.selected.focus {
+    color: #071018 !important;
+    background: #dffcf5 !important;
+}
+
+.shop_wrapper,
+.product_slick,
+.product_column1,
+.related_products {
+    position: relative;
+    z-index: 1;
+}
+
+.categories_menu,
+.categories_menu_toggle {
+    overflow-x: hidden !important;
+}
+
+.categories_menu_toggle {
+    scrollbar-gutter: stable;
+}
+
+.categories_menu_toggle > ul,
+.rsport-category-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 14px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.rsport-category-link,
+.categories_menu_toggle > ul > li > a {
+    color: #f7fbff !important;
+    background: rgba(4, 10, 16, 0.88) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.rsport-category-link:hover,
+.categories_menu_toggle > ul > li > a:hover {
+    color: #071018 !important;
+    background: #eafff9 !important;
+}
+
+.rsport-category-link small {
+    color: rgba(247, 251, 255, 0.72) !important;
+}
+
+.rsport-category-link:hover small {
+    color: #344452 !important;
+}
+
+.categories_menu.rsport-categories-collapsed .categories_menu_toggle {
+    display: none !important;
+}
+
+.blog_page_section,
+.blog_details {
+    color: #f7fbff !important;
+}
+
+.blog_page_section .section_title h2,
+.blog_page_section .blog_header h1,
+.blog_page_section h1,
+.blog_sidebar_widget .widget_title h3 {
+    color: #f7fbff !important;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.42);
+}
+
+.blog_sidebar_widget .widget_list {
+    padding: 22px !important;
+    margin-bottom: 24px !important;
+    color: #f7fbff !important;
+    background: rgba(7, 16, 24, 0.9) !important;
+    border: 1px solid rgba(44, 246, 211, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+.blog_sidebar_widget .widget_list a,
+.blog_sidebar_widget .widget_list span,
+.blog_sidebar_widget .widget_list h4,
+.blog_sidebar_widget .widget_list p {
+    color: #f7fbff !important;
+}
+
+.blog_sidebar_widget .widget_list a:hover {
+    color: #2cf6d3 !important;
+}
+
+.blog_sidebar_widget .post_wrapper {
+    gap: 12px;
+    align-items: center;
+}
+
+.single_blog.rsport-blog-card,
+.single_blog.rsport-blog-card .blog_content {
+    color: #071018 !important;
+    background: rgba(247, 251, 255, 0.94) !important;
+}
+
+.single_blog.rsport-blog-card .post_title a {
+    color: #071018 !important;
+}
+
+.single_blog.rsport-blog-card .post_desc,
+.single_blog.rsport-blog-card .post_date {
+    color: #344452 !important;
+}
+
+.rsport-blog-detail {
+    background: rgba(247, 251, 255, 0.96) !important;
+}
+
+.rsport-blog-detail h1,
+.rsport-blog-detail p,
+.rsport-blog-detail .post_date,
+.rsport-blog-detail .rsport-lead {
+    color: #071018 !important;
+}
+
+.contact_area .row {
+    align-items: stretch;
+}
+
+.contact_message {
+    height: 100%;
+    padding: clamp(28px, 4vw, 42px) !important;
+    color: #071018 !important;
+    background: rgba(247, 251, 255, 0.92) !important;
+    border: 1px solid rgba(44, 246, 211, 0.2) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.22);
+}
+
+.contact_message h3,
+.contact_message p,
+.contact_message li,
+.contact_message label,
+.contact_message a {
+    color: #071018 !important;
+}
+
+.contact_message ul {
+    margin-top: 24px !important;
+}
+
+.contact_message ul li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0 !important;
+    line-height: 1.45 !important;
+}
+
+.contact_message input,
+.contact_message textarea {
+    color: #071018 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(7, 16, 24, 0.16) !important;
+}
+
+.contact_message input::placeholder,
+.contact_message textarea::placeholder {
+    color: #687684 !important;
+    opacity: 1 !important;
+}
+
+.contact_message.form p {
+    margin-bottom: 18px !important;
+}
+
+.rsport-form-success {
+    color: #0b6b4a !important;
+    font-weight: 800;
+}
+
+.chose_content {
+    padding: 18px 22px !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(7, 16, 24, 0.08) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 18px 40px rgba(7, 16, 24, 0.1);
+}
+
+.chose_content h3 {
+    color: #071018 !important;
+    text-shadow: none !important;
+}
+
+.team_area .row {
+    justify-content: center;
+}
+
+.team_member {
+    text-align: center;
+}
+
+.team_content h3,
+.team_content h5 {
+    color: #f7fbff !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.wishlist_area .table_desc,
+.shopping_cart_area .table_desc {
+    overflow-x: auto !important;
+}
+
+.wishlist_area table,
+.shopping_cart_area table {
+    min-width: 760px;
+}
+
+.wishlist_area table th,
+.wishlist_area table td,
+.shopping_cart_area table th,
+.shopping_cart_area table td {
+    color: #071018 !important;
+    vertical-align: middle !important;
+}
+
+.wishlist_area table thead th,
+.shopping_cart_area table thead th {
+    color: #f7fbff !important;
+    background: #111c24 !important;
+}
+
+.wishlist_area .product_remove a,
+.shopping_cart_area .product_remove a {
+    color: #ff334f !important;
+    font-weight: 900;
+}
+
+.product_d_right,
+.product-details-tab,
+.product_d_inner,
+.related_products {
+    background: rgba(247, 251, 255, 0.92) !important;
+    border-radius: 8px !important;
+}
+
+.product_d_right h1,
+.product_variant.color h3,
+.product_variant.color label,
+.product_d_action ul li a,
+.product_meta,
+.product_meta a {
+    color: #071018 !important;
+}
+
+.product_desc p,
+.product_d_right,
+.product_variant.quantity label,
+.rsport-selected-option {
+    color: #344452 !important;
+}
+
+.rsport-color-swatch.active,
+.rsport-size-option.active {
+    outline: 3px solid #ff3f66 !important;
+    box-shadow: 0 0 0 5px rgba(255, 63, 102, 0.18) !important;
+}
+
+.rsport-quick-view,
+.rsport-compare-tray {
+    z-index: 11000 !important;
+}

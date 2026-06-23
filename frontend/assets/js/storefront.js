@@ -100,6 +100,129 @@
     { label: "Cardio", href: "shop.html?category=Cardio", detail: "Treadmills, bikes, and conditioning" }
   ];
 
+  var FALLBACK_PRODUCTS = [
+    {
+      id: "adjustable-bench",
+      name: "Adjustable Strength Bench",
+      slug: "adjustable-strength-bench",
+      category: "Strength",
+      description: "Multi-position training bench for presses, rows, core work, and compact home strength sessions.",
+      priceCents: 12999,
+      compareAtCents: 14999,
+      stock: 14,
+      image: "assets/img/product/product1.webp",
+      secondaryImage: "assets/img/product/product2.webp",
+      gallery: ["assets/img/product/product1.webp", "assets/img/product/product2.webp"],
+      options: { colors: ["Red", "Neon Lime"], sizes: ["Flat", "Incline", "Decline"] },
+      featured: true
+    },
+    {
+      id: "performance-tee",
+      name: "RSPort Performance Training Tee",
+      slug: "rsport-performance-training-tee",
+      category: "Apparel",
+      description: "Lightweight moisture-wicking shirt for gym sessions, classes, running warmups, and everyday training.",
+      priceCents: 2999,
+      compareAtCents: 3499,
+      stock: 90,
+      image: "assets/img/product/product3.webp",
+      secondaryImage: "assets/img/custom-p/product5.webp",
+      gallery: ["assets/img/product/product3.webp", "assets/img/custom-p/product5.webp"],
+      options: { colors: ["White", "Graphite"], sizes: ["S", "M", "L", "XL"] },
+      featured: true
+    },
+    {
+      id: "boxing-gloves-pro",
+      name: "RSPort Pro Boxing Gloves",
+      slug: "rsport-pro-boxing-gloves",
+      category: "Boxing",
+      description: "Durable sparring gloves with wrist support, breathable lining, and balanced padding for daily bag work.",
+      priceCents: 7999,
+      compareAtCents: 8999,
+      stock: 28,
+      image: "assets/img/product/product11.webp",
+      secondaryImage: "assets/img/product/product5.webp",
+      gallery: ["assets/img/product/product11.webp", "assets/img/product/product5.webp", "assets/img/product/product4.webp"],
+      options: { colors: ["Black", "Red", "White"], sizes: ["10 oz", "12 oz", "14 oz", "16 oz"] },
+      featured: true
+    },
+    {
+      id: "elite-duffel-bag",
+      name: "Elite Training Duffel Bag",
+      slug: "elite-training-duffel-bag",
+      category: "Accessories",
+      description: "Water-resistant gym bag with shoe compartment, padded strap, bottle pocket, and quick-access storage.",
+      priceCents: 5999,
+      compareAtCents: 6999,
+      stock: 25,
+      image: "assets/img/product/product7.webp",
+      secondaryImage: "assets/img/product/product6.webp",
+      gallery: ["assets/img/product/product7.webp", "assets/img/product/product6.webp", "assets/img/custom-p/product4.webp"],
+      options: { colors: ["Black", "Red", "Neon Lime"], sizes: ["35 L", "50 L"] },
+      featured: true
+    },
+    {
+      id: "heavy-bag-classic",
+      name: "Classic Heavy Boxing Bag",
+      slug: "classic-heavy-boxing-bag",
+      category: "Boxing",
+      description: "Freestanding heavy bag for strikes, conditioning rounds, and boxing technique drills at home.",
+      priceCents: 11999,
+      compareAtCents: 13999,
+      stock: 18,
+      image: "assets/img/product/product8.webp",
+      secondaryImage: "assets/img/custom-p/product7.webp",
+      gallery: ["assets/img/product/product8.webp", "assets/img/custom-p/product7.webp", "assets/img/product/productbig1.webp"],
+      options: { colors: ["Black", "Red"], sizes: ["120 cm", "150 cm"] },
+      featured: false
+    },
+    {
+      id: "core-trainer",
+      name: "CoreForm Ab Trainer",
+      slug: "coreform-ab-trainer",
+      category: "Strength",
+      description: "Compact ab trainer with padded rollers for controlled core work, warmups, and accessory sessions.",
+      priceCents: 4499,
+      compareAtCents: 5499,
+      stock: 32,
+      image: "assets/img/product/product9.webp",
+      secondaryImage: "assets/img/product/product10.webp",
+      gallery: ["assets/img/product/product9.webp", "assets/img/product/product10.webp", "assets/img/custom-p/product8.webp"],
+      options: { colors: ["Graphite", "Red", "Neon Lime"], sizes: ["One size"] },
+      featured: false
+    },
+    {
+      id: "cardio-treadmill",
+      name: "PulseRun Folding Treadmill",
+      slug: "pulserun-folding-treadmill",
+      category: "Cardio",
+      description: "Space-saving treadmill with clear console feedback for walking, running, and interval sessions.",
+      priceCents: 39999,
+      compareAtCents: 44999,
+      stock: 9,
+      image: "assets/img/product/product12.webp",
+      secondaryImage: "assets/img/product/product12.webp",
+      gallery: ["assets/img/product/product12.webp"],
+      options: { colors: ["Graphite"], sizes: ["Standard"] },
+      featured: true
+    },
+    {
+      id: "recumbent-bike",
+      name: "ComfortRide Recumbent Bike",
+      slug: "comfortride-recumbent-bike",
+      category: "Cardio",
+      description: "Low-impact exercise bike with supportive seat and easy controls for steady indoor cardio.",
+      priceCents: 24999,
+      compareAtCents: 27999,
+      stock: 11,
+      image: "assets/img/product/product16.webp",
+      secondaryImage: "assets/img/product/product14.webp",
+      gallery: ["assets/img/product/product16.webp", "assets/img/product/product14.webp", "assets/img/product/product15.webp"],
+      options: { colors: ["Black", "Graphite"], sizes: ["Standard"] },
+      featured: false
+    }
+  ];
+
   var COLOR_STYLES = {
     Black: { hex: "#05070a", filter: "contrast(1.08) saturate(0.9) brightness(0.82)" },
     White: { hex: "#f8fafc", filter: "brightness(1.18) saturate(0.88)" },
@@ -262,6 +385,156 @@
     return image && images.includes(image) ? image : "";
   }
 
+  function fallbackConfig() {
+    return {
+      currency: "eur",
+      stripePublishableKey: "",
+      paymentsConfigured: false,
+      demoCheckoutEnabled: true
+    };
+  }
+
+  function productMatches(product, q, category) {
+    var categoryText = String(category || "").trim().toLowerCase();
+    var queryText = String(q || "").trim().toLowerCase();
+    var searchable = [product.name, product.category, product.description].join(" ").toLowerCase();
+    var categoryMatches = !categoryText || product.category.toLowerCase() === categoryText || searchable.includes(categoryText);
+    var queryMatches = !queryText || searchable.includes(queryText);
+    return categoryMatches && queryMatches;
+  }
+
+  function fallbackProductsForCurrentPage() {
+    var params = new URLSearchParams(window.location.search);
+    return FALLBACK_PRODUCTS.filter(function (product) {
+      return productMatches(product, params.get("q"), params.get("category"));
+    });
+  }
+
+  function fallbackProductById(productId) {
+    return (
+      findLoadedProduct(productId) ||
+      FALLBACK_PRODUCTS.find(function (product) {
+        return product.id === productId || product.slug === productId;
+      }) ||
+      null
+    );
+  }
+
+  function readStoredJson(key, fallback) {
+    try {
+      var value = window.localStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function writeStoredJson(key, value) {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function fallbackWishlistIds() {
+    return unique(readStoredJson("rsport_wishlist_ids", []));
+  }
+
+  function saveFallbackWishlistIds(ids) {
+    writeStoredJson("rsport_wishlist_ids", unique(ids));
+  }
+
+  function fallbackWishlist() {
+    return {
+      items: fallbackWishlistIds()
+        .map(fallbackProductById)
+        .filter(Boolean)
+        .map(function (product) {
+          return Object.assign({}, product, {
+            stockStatus: product.stock > 0 ? "In Stock" : "Out of Stock"
+          });
+        })
+    };
+  }
+
+  function fallbackCartItems() {
+    return readStoredJson("rsport_cart_items", []);
+  }
+
+  function saveFallbackCartItems(items) {
+    writeStoredJson("rsport_cart_items", items.filter(function (item) {
+      return item.quantity > 0;
+    }));
+  }
+
+  function fallbackCart() {
+    var items = fallbackCartItems()
+      .map(function (item) {
+        var product = fallbackProductById(item.productId);
+        if (!product) {
+          return null;
+        }
+        var quantity = Math.max(1, Number(item.quantity || 1));
+        return {
+          productId: product.id,
+          name: product.name,
+          image: product.image,
+          unitPriceCents: product.priceCents,
+          quantity: quantity,
+          lineTotalCents: product.priceCents * quantity
+        };
+      })
+      .filter(Boolean);
+    var subtotalCents = items.reduce(function (sum, item) {
+      return sum + item.lineTotalCents;
+    }, 0);
+    var shippingCents = subtotalCents > 0 ? 499 : 0;
+    var taxCents = Math.round(subtotalCents * 0.23);
+    return {
+      items: items,
+      totals: {
+        subtotalCents: subtotalCents,
+        shippingCents: shippingCents,
+        taxCents: taxCents,
+        totalCents: subtotalCents + shippingCents + taxCents
+      }
+    };
+  }
+
+  function addFallbackCartItem(productId, quantity) {
+    var product = fallbackProductById(productId);
+    if (!product) {
+      throw new Error("Product could not be found.");
+    }
+    var items = fallbackCartItems();
+    var existing = items.find(function (item) {
+      return item.productId === product.id;
+    });
+    if (existing) {
+      existing.quantity += Math.max(1, Number(quantity || 1));
+    } else {
+      items.push({ productId: product.id, quantity: Math.max(1, Number(quantity || 1)) });
+    }
+    saveFallbackCartItems(items);
+    return fallbackCart();
+  }
+
+  function updateFallbackCartItem(productId, quantity) {
+    var items = fallbackCartItems();
+    var item = items.find(function (entry) {
+      return entry.productId === productId;
+    });
+    if (item) {
+      item.quantity = Math.max(0, Number(quantity || 0));
+    }
+    saveFallbackCartItems(items);
+    return fallbackCart();
+  }
+
+  function removeFallbackCartItem(productId) {
+    saveFallbackCartItems(fallbackCartItems().filter(function (item) {
+      return item.productId !== productId;
+    }));
+    return fallbackCart();
+  }
+
   function findLoadedProduct(productId) {
     return state.products.find(function (product) {
       return product.id === productId;
@@ -275,6 +548,12 @@
     }
     return api("/api/products/" + encodeURIComponent(productId)).then(function (payload) {
       return payload.product;
+    }).catch(function () {
+      var fallback = fallbackProductById(productId);
+      if (!fallback) {
+        throw new Error("Product could not be found.");
+      }
+      return fallback;
     });
   }
 
@@ -320,13 +599,22 @@
   }
 
   async function loadConfig() {
-    state.config = await api("/api/config");
+    try {
+      state.config = await api("/api/config");
+    } catch (error) {
+      state.config = fallbackConfig();
+    }
   }
 
   async function loadMe() {
-    var payload = await api("/api/auth/me");
-    state.me = payload.user;
-    state.csrfToken = payload.csrfToken || "";
+    try {
+      var payload = await api("/api/auth/me");
+      state.me = payload.user;
+      state.csrfToken = payload.csrfToken || "";
+    } catch (error) {
+      state.me = null;
+      state.csrfToken = "";
+    }
   }
 
   async function loadProducts() {
@@ -344,8 +632,12 @@
       productParams.set("category", category);
     }
     var suffix = productParams.toString() ? "?" + productParams.toString() : "";
-    var payload = await api("/api/products" + suffix);
-    state.products = payload.products || [];
+    try {
+      var payload = await api("/api/products" + suffix);
+      state.products = payload.products || [];
+    } catch (error) {
+      state.products = fallbackProductsForCurrentPage();
+    }
     return state.products;
   }
 
@@ -490,21 +782,37 @@
   }
 
   async function addToCart(productId, quantity) {
-    await api("/api/cart/items", {
-      method: "POST",
-      body: {
-        productId: productId,
-        quantity: quantity || 1
-      }
-    });
+    try {
+      await api("/api/cart/items", {
+        method: "POST",
+        body: {
+          productId: productId,
+          quantity: quantity || 1
+        }
+      });
+    } catch (error) {
+      addFallbackCartItem(productId, quantity);
+    }
     notify("Added to cart.", "success");
   }
 
   async function addToWishlist(productId) {
-    await api("/api/wishlist/items", {
-      method: "POST",
-      body: { productId: productId }
-    });
+    try {
+      await api("/api/wishlist/items", {
+        method: "POST",
+        body: { productId: productId }
+      });
+    } catch (error) {
+      var product = fallbackProductById(productId);
+      if (!product) {
+        throw new Error("Product could not be found.");
+      }
+      var ids = fallbackWishlistIds();
+      if (!ids.includes(product.id)) {
+        ids.unshift(product.id);
+      }
+      saveFallbackWishlistIds(ids);
+    }
     notify("Added to wishlist.", "success");
   }
 
@@ -663,11 +971,15 @@
         }
       }
 
-      var quickLink = event.target.closest("[data-quick-view]");
+      var quickLink = event.target.closest("[data-quick-view], .quick_button a");
       if (quickLink) {
+        var quickProductId = quickLink.dataset.quickView || (quickLink.closest(".single_product") || {}).dataset.productId;
+        if (!quickProductId) {
+          return;
+        }
         event.preventDefault();
         try {
-          await openQuickView(quickLink.dataset.quickView);
+          await openQuickView(quickProductId);
         } catch (error) {
           notify(error.message, "error");
         }
@@ -709,7 +1021,7 @@
     var productId = params.get("id");
     var product = null;
     if (productId) {
-      product = (await api("/api/products/" + encodeURIComponent(productId))).product;
+      product = await productById(productId);
     } else {
       product = (await loadProducts())[0];
     }
@@ -846,6 +1158,9 @@
     }
 
     var navProducts = await loadProducts();
+    if (!navProducts.length) {
+      navProducts = FALLBACK_PRODUCTS.slice();
+    }
     var currentIndex = navProducts.findIndex(function (entry) {
       return entry.id === product.id;
     });
@@ -862,6 +1177,7 @@
 
     var related = qs(".related_products .product_carousel");
     if (related) {
+      destroyOwlCarousel(related);
       related.innerHTML = navProducts
         .filter(function (entry) {
           return entry.id !== product.id;
@@ -871,6 +1187,16 @@
           return productCard(entry, true);
         })
         .join("");
+      initProductOwlCarousel(related, {
+        nav: true,
+        items: 4,
+        responsive: {
+          0: { items: 1 },
+          576: { items: 2, margin: 20 },
+          768: { items: 3, margin: 24 },
+          992: { items: 4, margin: 28 }
+        }
+      });
     }
 
     document.addEventListener("click", function (event) {
@@ -972,7 +1298,32 @@
   }
 
   async function refreshCart() {
-    return (await api("/api/cart")).cart;
+    try {
+      return (await api("/api/cart")).cart;
+    } catch (error) {
+      return fallbackCart();
+    }
+  }
+
+  async function updateCartItem(productId, quantity) {
+    try {
+      return (await api("/api/cart/items/" + encodeURIComponent(productId), {
+        method: "PATCH",
+        body: { quantity: Number(quantity) }
+      })).cart;
+    } catch (error) {
+      return updateFallbackCartItem(productId, quantity);
+    }
+  }
+
+  async function removeCartItem(productId) {
+    try {
+      return (await api("/api/cart/items/" + encodeURIComponent(productId), {
+        method: "DELETE"
+      })).cart;
+    } catch (error) {
+      return removeFallbackCartItem(productId);
+    }
   }
 
   async function initCartPage() {
@@ -993,12 +1344,9 @@
         return;
       }
       try {
-        var updated = await api("/api/cart/items/" + encodeURIComponent(event.target.dataset.quantityItem), {
-          method: "PATCH",
-          body: { quantity: Number(event.target.value) }
-        });
-        tbody.innerHTML = cartRows(updated.cart);
-        renderTotals(updated.cart.totals, qs(".coupon_area"));
+        var updated = await updateCartItem(event.target.dataset.quantityItem, Number(event.target.value));
+        tbody.innerHTML = cartRows(updated);
+        renderTotals(updated.totals, qs(".coupon_area"));
       } catch (error) {
         notify(error.message, "error");
       }
@@ -1010,11 +1358,9 @@
       }
       event.preventDefault();
       try {
-        var updated = await api("/api/cart/items/" + encodeURIComponent(remove.dataset.removeItem), {
-          method: "DELETE"
-        });
-        tbody.innerHTML = cartRows(updated.cart);
-        renderTotals(updated.cart.totals, qs(".coupon_area"));
+        var updated = await removeCartItem(remove.dataset.removeItem);
+        tbody.innerHTML = cartRows(updated);
+        renderTotals(updated.totals, qs(".coupon_area"));
       } catch (error) {
         notify(error.message, "error");
       }
@@ -1049,8 +1395,13 @@
     if (!tbody) {
       return;
     }
-    var payload = await api("/api/wishlist");
-    tbody.innerHTML = wishlistRows(payload.wishlist);
+    var wishlist;
+    try {
+      wishlist = (await api("/api/wishlist")).wishlist;
+    } catch (error) {
+      wishlist = fallbackWishlist();
+    }
+    tbody.innerHTML = wishlistRows(wishlist);
     if (tbody.dataset.rsportBound) {
       return;
     }
@@ -1062,10 +1413,18 @@
       }
       event.preventDefault();
       try {
-        var updated = await api("/api/wishlist/items/" + encodeURIComponent(remove.dataset.removeWishlist), {
-          method: "DELETE"
-        });
-        tbody.innerHTML = wishlistRows(updated.wishlist);
+        var wishlist;
+        try {
+          wishlist = (await api("/api/wishlist/items/" + encodeURIComponent(remove.dataset.removeWishlist), {
+            method: "DELETE"
+          })).wishlist;
+        } catch (error) {
+          saveFallbackWishlistIds(fallbackWishlistIds().filter(function (id) {
+            return id !== remove.dataset.removeWishlist;
+          }));
+          wishlist = fallbackWishlist();
+        }
+        tbody.innerHTML = wishlistRows(wishlist);
       } catch (error) {
         notify(error.message, "error");
       }
@@ -1365,6 +1724,110 @@
     ].join("");
   }
 
+  function destroyOwlCarousel(element) {
+    if (!element || !window.jQuery || !window.jQuery.fn || !window.jQuery.fn.owlCarousel) {
+      return;
+    }
+    try {
+      window.jQuery(element).trigger("destroy.owl.carousel");
+      window.jQuery(element).removeClass("owl-loaded owl-drag owl-hidden");
+      window.jQuery(element).find(".owl-stage-outer").children().unwrap();
+      window.jQuery(element).find(".owl-stage").children().unwrap();
+      window.jQuery(element).find(".owl-item").children().unwrap();
+      window.jQuery(element).find(".owl-nav, .owl-dots").remove();
+    } catch (error) {
+      // Some pages are static until this script hydrates them.
+    }
+  }
+
+  function initProductOwlCarousel(element, options) {
+    if (!element || !window.jQuery || !window.jQuery.fn || !window.jQuery.fn.owlCarousel) {
+      return;
+    }
+    window.jQuery(element).owlCarousel(
+      Object.assign(
+        {
+          autoplay: true,
+          autoplayTimeout: 5200,
+          autoplayHoverPause: true,
+          loop: true,
+          nav: false,
+          dots: false,
+          items: 1,
+          responsiveClass: true,
+          responsive: {
+            0: { items: 1 },
+            768: { items: 2, margin: 24 },
+            992: { items: 1 }
+          }
+        },
+        options || {}
+      )
+    );
+  }
+
+  function destroySlickCarousel(element) {
+    if (!element || !window.jQuery || !window.jQuery.fn || !window.jQuery.fn.slick) {
+      return;
+    }
+    try {
+      if (window.jQuery(element).hasClass("slick-initialized")) {
+        window.jQuery(element).slick("unslick");
+      }
+    } catch (error) {
+      // The plugin may not have initialized on pages with replaced markup yet.
+    }
+  }
+
+  function initFeaturedSlick(element) {
+    if (!element || !window.jQuery || !window.jQuery.fn || !window.jQuery.fn.slick) {
+      return;
+    }
+    window.jQuery(element).slick({
+      centerMode: true,
+      centerPadding: "0",
+      slidesToShow: 3,
+      rows: 2,
+      autoplay: true,
+      autoplaySpeed: 5200,
+      prevArrow: '<button class="prev_arrow" aria-label="Previous products"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>',
+      nextArrow: '<button class="next_arrow" aria-label="Next products"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>',
+      responsive: [
+        { breakpoint: 576, settings: { slidesToShow: 1, slidesToScroll: 1, rows: 1 } },
+        { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2, rows: 1 } },
+        { breakpoint: 991, settings: { slidesToShow: 3, slidesToScroll: 3, rows: 1 } },
+        { breakpoint: 1200, settings: { slidesToShow: 2, slidesToScroll: 2 } }
+      ]
+    });
+  }
+
+  async function initHomeProductSections() {
+    if (!qs(".home_product_four")) {
+      return;
+    }
+    var products = (await loadProducts()).length ? state.products : FALLBACK_PRODUCTS.slice();
+    var deals = products.filter(function (product) {
+      return product.compareAtCents;
+    }).slice(0, 3);
+    var dealCarousel = qs(".product_countdown_container.product_column1");
+    if (dealCarousel) {
+      destroyOwlCarousel(dealCarousel);
+      dealCarousel.innerHTML = (deals.length ? deals : products.slice(0, 3)).map(function (product) {
+        return productCard(product, true);
+      }).join("");
+      initProductOwlCarousel(dealCarousel);
+    }
+
+    var featured = qs(".product_slick .slick_column3");
+    if (featured) {
+      destroySlickCarousel(featured);
+      featured.innerHTML = products.map(function (product) {
+        return productCard(product, true);
+      }).join("");
+      initFeaturedSlick(featured);
+    }
+  }
+
   function initHomeHeroAndCategories() {
     var slides = qsa(".slider_area .single_slider");
     var slideContent = [
@@ -1497,12 +1960,17 @@
     document.addEventListener(
       "click",
       function (event) {
-        var link = event.target.closest(".rsport-category-link");
+        var link = event.target.closest(".rsport-category-link, .categories_menu_toggle a");
         if (!link) {
           return;
         }
+        var href = link.getAttribute("href") || "";
+        if (!href || href === "#") {
+          var label = (link.textContent || "").trim().split(/\s+/)[0] || "training";
+          href = "shop.html?q=" + encodeURIComponent(label);
+        }
         event.preventDefault();
-        window.location.href = link.href;
+        window.location.href = href;
       },
       true
     );
@@ -1567,6 +2035,41 @@
       }).join("");
     }
 
+    var sidebarComments = qs(".blog_sidebar_widget .widget_list.comments");
+    if (sidebarComments) {
+      sidebarComments.innerHTML = [
+        '<div class="widget_title"><h3>Recent Comment</h3></div>',
+        '<div class="post_wrapper rsport-readable-comment">',
+        '<div class="post_thumb"><a href="' + blogUrl(BLOG_POSTS[0].slug) + '"><img src="assets/img/blog/comment2.webp" alt="Rafael"></a></div>',
+        '<div class="post_info"><span><a href="#">Rafael</a> says:</span>',
+        '<a href="' + blogUrl(BLOG_POSTS[0].slug) + '">Useful training notes and clean product advice.</a></div>',
+        "</div>"
+      ].join("");
+    }
+
+    var sidebarPosts = qs(".blog_sidebar_widget .widget_list.widget_post");
+    if (sidebarPosts) {
+      sidebarPosts.innerHTML = [
+        '<div class="widget_title"><h3>Recent Posts</h3></div>',
+        BLOG_POSTS.slice(0, 4).map(function (post) {
+          return [
+            '<div class="post_wrapper">',
+            '<div class="post_thumb"><a href="' + blogUrl(post.slug) + '"><img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.title) + '"></a></div>',
+            '<div class="post_info"><h4><a href="' + blogUrl(post.slug) + '">' + escapeHtml(post.title) + "</a></h4>",
+            "<span>" + escapeHtml(post.date) + "</span></div>",
+            "</div>"
+          ].join("");
+        }).join("")
+      ].join("");
+    }
+
+    var sidebarTags = qs(".blog_sidebar_widget .widget_list.widget_tag .tag_widget ul");
+    if (sidebarTags) {
+      sidebarTags.innerHTML = ["strength", "boxing", "running", "cardio", "recovery"].map(function (tag) {
+        return '<li><a href="shop.html?q=' + encodeURIComponent(tag) + '">' + escapeHtml(tag) + "</a></li>";
+      }).join("");
+    }
+
     var detail = qs(".rsport-blog-detail");
     if (detail) {
       var params = new URLSearchParams(window.location.search);
@@ -1618,7 +2121,7 @@
   }
 
   function initSearch() {
-    qsa(".search_box form").forEach(function (form) {
+    qsa(".search_box form, .widget_search form").forEach(function (form) {
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         var value = (qs("input", form) || {}).value || "";
@@ -1627,28 +2130,57 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", async function () {
-    try {
-      await loadConfig();
-      await loadMe();
-      initSearch();
-      initAddToCart();
-      initWishlistCompareQuickView();
-      initCategoryNavigation();
-      initHomeHeroAndCategories();
-      initPromoBanners();
-      await initShop();
-      await hydrateStaticProductCards();
-      await initProductDetails();
-      await initCartPage();
-      await initWishlistPage();
-      await initCheckoutPage();
-      initAuthForms();
-      initSocialAuthButtons();
-      await initAccountPage();
-      initBlogContent();
-    } catch (error) {
-      notify(error.message, "error");
+  function initContactPage() {
+    var form = qs("#contact-form");
+    if (!form) {
+      return;
     }
+    form.setAttribute("action", "#");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var message = qs(".form-messege", form);
+      if (message) {
+        message.textContent = "Message saved locally for demo mode. Connect an email provider before production.";
+        message.classList.add("rsport-form-success");
+      }
+      notify("Contact message received in demo mode.", "success");
+      form.reset();
+    });
+  }
+
+  async function safeRun(label, task) {
+    try {
+      await task();
+    } catch (error) {
+      if (window.console && window.console.warn) {
+        window.console.warn("RSPort startup skipped " + label + ":", error.message);
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    state.config = state.config || fallbackConfig();
+    initSearch();
+    initAddToCart();
+    initWishlistCompareQuickView();
+    initCategoryNavigation();
+    initHomeHeroAndCategories();
+    initPromoBanners();
+    initBlogContent();
+    initSocialAuthButtons();
+    initContactPage();
+
+    await safeRun("config", loadConfig);
+    await safeRun("session", loadMe);
+    await safeRun("shop", initShop);
+    await safeRun("home products", initHomeProductSections);
+    await safeRun("product cards", hydrateStaticProductCards);
+    await safeRun("product details", initProductDetails);
+    await safeRun("cart", initCartPage);
+    await safeRun("wishlist", initWishlistPage);
+    await safeRun("checkout", initCheckoutPage);
+    initAuthForms();
+    initSocialAuthButtons();
+    await safeRun("account", initAccountPage);
   });
 })();
