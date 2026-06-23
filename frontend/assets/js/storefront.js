@@ -385,6 +385,53 @@
     return image && images.includes(image) ? image : "";
   }
 
+  function productSizeImage(product, size) {
+    var images = productImages(product);
+    var map = {
+      "adjustable-bench": {
+        Flat: "assets/img/product/product1.webp",
+        Incline: "assets/img/product/product2.webp",
+        Decline: "assets/img/product/product1.webp"
+      },
+      "boxing-gloves-pro": {
+        "10 oz": "assets/img/product/product11.webp",
+        "12 oz": "assets/img/product/product5.webp",
+        "14 oz": "assets/img/product/product4.webp",
+        "16 oz": "assets/img/product/product11.webp"
+      },
+      "elite-duffel-bag": {
+        "35 L": "assets/img/product/product7.webp",
+        "50 L": "assets/img/product/product6.webp"
+      },
+      "heavy-bag-classic": {
+        "120 cm": "assets/img/product/product8.webp",
+        "150 cm": "assets/img/custom-p/product7.webp"
+      },
+      "recumbent-bike": {
+        Standard: "assets/img/product/product16.webp"
+      }
+    };
+    var image = map[product.id] && map[product.id][size];
+    return image && images.includes(image) ? image : "";
+  }
+
+  function updateProductDetailImage(product, gallery, image, filter) {
+    var mainImage = qs("#zoom1", gallery || document);
+    if (!mainImage) {
+      return;
+    }
+    if (image) {
+      mainImage.src = image;
+      mainImage.dataset.zoomImage = image;
+      mainImage.style.filter = "";
+      qsa(".rsport-thumb-button", gallery || document).forEach(function (button) {
+        button.classList.toggle("active", button.dataset.productImage === image);
+      });
+      return;
+    }
+    mainImage.style.filter = filter || "";
+  }
+
   function fallbackConfig() {
     return {
       currency: "eur",
@@ -1094,7 +1141,8 @@
                   return '<button type="button" class="rsport-size-option ' + (index === 0 ? "active" : "") + '" data-size="' + escapeHtml(size) + '">' + escapeHtml(size) + "</button>";
                 })
                 .join(""),
-              "</div>"
+              "</div>",
+              '<p class="rsport-selected-size">Size: ' + escapeHtml(options.sizes[0] || "Default") + "</p>"
             ].join("")
           : ""
       ].join("");
@@ -1217,7 +1265,6 @@
 
       var color = event.target.closest(".rsport-color-swatch");
       if (color && colorVariant && colorVariant.contains(color)) {
-        var mainImage = qs("#zoom1");
         event.preventDefault();
         qsa(".rsport-color-swatch", colorVariant).forEach(function (button) {
           button.classList.toggle("active", button === color);
@@ -1226,18 +1273,7 @@
         if (selected) {
           selected.textContent = "Selected: " + color.dataset.color;
         }
-        if (mainImage) {
-          if (color.dataset.image) {
-            mainImage.src = color.dataset.image;
-            mainImage.dataset.zoomImage = color.dataset.image;
-            mainImage.style.filter = "";
-            qsa(".rsport-thumb-button", gallery).forEach(function (button) {
-              button.classList.toggle("active", button.dataset.productImage === color.dataset.image);
-            });
-          } else {
-            mainImage.style.filter = color.dataset.filter || "";
-          }
-        }
+        updateProductDetailImage(product, gallery, color.dataset.image, color.dataset.filter);
         return;
       }
 
@@ -1247,6 +1283,18 @@
         qsa(".rsport-size-option", colorVariant).forEach(function (button) {
           button.classList.toggle("active", button === size);
         });
+        var selectedSize = qs(".rsport-selected-size", colorVariant);
+        if (selectedSize) {
+          selectedSize.textContent = "Size: " + size.dataset.size;
+        }
+        var activeColor = qs(".rsport-color-swatch.active", colorVariant);
+        var fallbackImage = activeColor ? activeColor.dataset.image : "";
+        var fallbackFilter = activeColor ? activeColor.dataset.filter : "";
+        updateProductDetailImage(product, gallery, productSizeImage(product, size.dataset.size) || fallbackImage, fallbackFilter);
+        var mainImage = qs("#zoom1", gallery || document);
+        if (mainImage) {
+          mainImage.dataset.variantSize = size.dataset.size;
+        }
       }
     });
 
@@ -2120,6 +2168,32 @@
     });
   }
 
+  function initHeaderShortcuts() {
+    qsa(".top_right").forEach(function (topRight) {
+      var dropdown = qs(".dropdown_links", topRight);
+      if (dropdown && !dropdown.dataset.rsportAccountMenu) {
+        dropdown.dataset.rsportAccountMenu = "true";
+        dropdown.innerHTML = [
+          '<li><a href="my-account.html">Profile settings</a></li>',
+          '<li><a href="my-account.html#orders">Order history</a></li>',
+          '<li><a href="my-account.html#address">Personal data</a></li>',
+          '<li><a href="login.html">Login / Register</a></li>'
+        ].join("");
+      }
+
+      if (topRight.parentNode && !topRight.parentNode.querySelector(".rsport-header-actions")) {
+        var actions = document.createElement("nav");
+        actions.className = "rsport-header-actions";
+        actions.setAttribute("aria-label", "Shopping shortcuts");
+        actions.innerHTML = [
+          '<a class="rsport-header-action" href="wishlist.html" title="Wishlist" aria-label="Open wishlist"><i class="fa fa-heart" aria-hidden="true"></i><span>Wishlist</span></a>',
+          '<a class="rsport-header-action" href="cart.html" title="Shopping cart" aria-label="Open shopping cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Cart</span></a>'
+        ].join("");
+        topRight.insertAdjacentElement("afterend", actions);
+      }
+    });
+  }
+
   function initSearch() {
     qsa(".search_box form, .widget_search form").forEach(function (form) {
       form.addEventListener("submit", function (event) {
@@ -2164,6 +2238,7 @@
     initAddToCart();
     initWishlistCompareQuickView();
     initCategoryNavigation();
+    initHeaderShortcuts();
     initHomeHeroAndCategories();
     initPromoBanners();
     initBlogContent();
