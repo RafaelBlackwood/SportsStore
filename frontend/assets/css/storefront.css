@@ -2706,3 +2706,174 @@ body::after {
     width: 42px !important;
     height: 42px !important;
 }
+
+/* Final visibility layer: bright header shortcuts, body-level account menu, readable section titles. */
+html body .header_top .dropdown_links.rsport-account-menu {
+    display: none !important;
+}
+
+html body .rsport-floating-account-menu {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 2147483647 !important;
+    display: block !important;
+    min-width: 240px;
+    padding: 10px 12px;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    color: #071018 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(44, 246, 211, 0.65) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55) !important;
+    transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
+}
+
+html body .rsport-floating-account-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+html body .rsport-floating-account-menu li {
+    margin: 0;
+    border-bottom: 1px solid rgba(7, 16, 24, 0.1);
+}
+
+html body .rsport-floating-account-menu li:last-child {
+    border-bottom: 0;
+}
+
+html body .rsport-floating-account-menu a {
+    display: block;
+    padding: 11px 12px;
+    color: #071018 !important;
+    background: transparent !important;
+    font-size: 15px;
+    line-height: 1.25;
+    text-shadow: none !important;
+}
+
+html body .rsport-floating-account-menu a:hover,
+html body .rsport-floating-account-menu a:focus {
+    color: #071018 !important;
+    background: #dffcf5 !important;
+}
+
+html body .header_top_settings .rsport-header-actions {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: max-content !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action {
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 48px !important;
+    height: 44px !important;
+    padding: 0 13px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #ff334f, #ff6848) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 999px !important;
+    box-shadow: 0 13px 30px rgba(255, 51, 79, 0.35) !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action i {
+    display: inline-block !important;
+    color: #ffffff !important;
+    font-size: 17px !important;
+    line-height: 1 !important;
+    opacity: 1 !important;
+}
+
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action span {
+    position: static !important;
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: nowrap !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    line-height: 1 !important;
+}
+
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:hover,
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:focus {
+    color: #071018 !important;
+    background: linear-gradient(135deg, #2cf6d3, #b8ff4d) !important;
+}
+
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:hover i,
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:focus i,
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:hover span,
+html body .header_top_settings .rsport-header-actions > a.rsport-header-action:focus span {
+    color: #071018 !important;
+}
+
+html body .mobile-header-action .rsport-header-action {
+    width: 42px !important;
+    min-width: 42px !important;
+    padding: 0 !important;
+}
+
+html body .mobile-header-action .rsport-header-action span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+}
+
+html body .section_title h2,
+html body .blog_section .section_title h2,
+html body .product_four_container .section_title h2,
+html body .product_countdown_area .section_title h2,
+html body .related_products .section_title h2 {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 58px !important;
+    padding: 13px 22px !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, rgba(255, 51, 79, 0.96), rgba(6, 13, 20, 0.9)) !important;
+    border: 1px solid rgba(44, 246, 211, 0.55) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32), 0 0 28px rgba(44, 246, 211, 0.14) !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55) !important;
+}
+
+html body .section_title {
+    position: relative;
+    z-index: 2;
+}
+
+html body .header_top .top_right > ul > li > ul.dropdown_links.rsport-account-menu,
+html body .header_top .top_right > ul > li:hover > ul.dropdown_links.rsport-account-menu,
+html body .header_top .top_right > ul > li:focus-within > ul.dropdown_links.rsport-account-menu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}

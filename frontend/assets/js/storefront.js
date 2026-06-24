@@ -2222,6 +2222,104 @@
     });
   }
 
+  function initFloatingAccountMenu() {
+    if (document.body.dataset.rsportFloatingAccountReady) {
+      return;
+    }
+    document.body.dataset.rsportFloatingAccountReady = "true";
+
+    var desktopTriggers = qsa(".header_top .top_links > a").filter(function (trigger) {
+      return trigger.closest(".top_right") && trigger.textContent.toLowerCase().includes("my account");
+    });
+    if (!desktopTriggers.length) {
+      return;
+    }
+
+    var floating = document.createElement("ul");
+    floating.className = "rsport-floating-account-menu";
+    floating.innerHTML = [
+      '<li><a href="my-account.html">Profile settings</a></li>',
+      '<li><a href="my-account.html#orders">Order history</a></li>',
+      '<li><a href="my-account.html#address">Personal data</a></li>',
+      '<li><a href="login.html">Login / Register</a></li>'
+    ].join("");
+    document.body.appendChild(floating);
+
+    var hideTimer = 0;
+    var activeTrigger = null;
+
+    function placeFloating(trigger) {
+      var rect = trigger.getBoundingClientRect();
+      var width = Math.max(floating.offsetWidth || 240, 240);
+      var left = Math.min(Math.max(rect.right - width, 12), window.innerWidth - width - 12);
+      floating.style.left = Math.round(left) + "px";
+      floating.style.top = Math.round(rect.bottom + 8) + "px";
+    }
+
+    function show(trigger) {
+      window.clearTimeout(hideTimer);
+      activeTrigger = trigger;
+      floating.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+      placeFloating(trigger);
+    }
+
+    function hide() {
+      if (activeTrigger) {
+        activeTrigger.setAttribute("aria-expanded", "false");
+      }
+      activeTrigger = null;
+      floating.classList.remove("is-open");
+    }
+
+    function hideSoon() {
+      window.clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(hide, 160);
+    }
+
+    desktopTriggers.forEach(function (trigger) {
+      trigger.setAttribute("aria-haspopup", "true");
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.addEventListener("mouseenter", function () {
+        show(trigger);
+      });
+      trigger.addEventListener("focus", function () {
+        show(trigger);
+      });
+      trigger.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (floating.classList.contains("is-open") && activeTrigger === trigger) {
+          hide();
+        } else {
+          show(trigger);
+        }
+      });
+      var parent = trigger.closest(".top_links");
+      if (parent) {
+        parent.addEventListener("mouseleave", hideSoon);
+      }
+    });
+
+    floating.addEventListener("mouseenter", function () {
+      window.clearTimeout(hideTimer);
+    });
+    floating.addEventListener("mouseleave", hideSoon);
+    window.addEventListener("scroll", function () {
+      if (activeTrigger) {
+        placeFloating(activeTrigger);
+      }
+    }, { passive: true });
+    window.addEventListener("resize", function () {
+      if (activeTrigger) {
+        placeFloating(activeTrigger);
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        hide();
+      }
+    });
+  }
   function initSearch() {
     qsa(".search_box form, .widget_search form").forEach(function (form) {
       form.addEventListener("submit", function (event) {
@@ -2267,6 +2365,7 @@
     initWishlistCompareQuickView();
     initCategoryNavigation();
     initHeaderShortcuts();
+    initFloatingAccountMenu();
     initHomeHeroAndCategories();
     initPromoBanners();
     initBlogContent();
