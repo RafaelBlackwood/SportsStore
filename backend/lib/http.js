@@ -134,7 +134,7 @@ function serveStatic(req, res, frontendDir) {
   }
   const ext = path.extname(filePath).toLowerCase();
   res.setHeader("Content-Type", CONTENT_TYPES[ext] || "application/octet-stream");
-  res.setHeader("Cache-Control", ext === ".html" ? "no-store" : "public, max-age=86400");
+  res.setHeader("Cache-Control", [".html", ".css", ".js"].includes(ext) ? "no-store" : "public, max-age=86400");
   fs.createReadStream(filePath).pipe(res);
 }
 
