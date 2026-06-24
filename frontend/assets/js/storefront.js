@@ -416,15 +416,23 @@
   }
 
   function updateProductDetailImage(product, gallery, image, filter) {
-    var mainImage = qs("#zoom1", gallery || document);
+    var root = gallery || document;
+    var mainImage = qs("#zoom1", root);
     if (!mainImage) {
       return;
     }
     if (image) {
       mainImage.src = image;
+      mainImage.setAttribute("src", image);
       mainImage.dataset.zoomImage = image;
+      mainImage.setAttribute("data-zoom-image", image);
       mainImage.style.filter = "";
-      qsa(".rsport-thumb-button", gallery || document).forEach(function (button) {
+      mainImage.closest(".zoomWrapper")?.setAttribute("data-current-image", image);
+      if (window.jQuery) {
+        window.jQuery(mainImage).attr("src", image).attr("data-zoom-image", image).removeData("elevateZoom").removeData("zoomImage");
+        window.jQuery(".zoomContainer").remove();
+      }
+      qsa(".rsport-thumb-button", root).forEach(function (button) {
         button.classList.toggle("active", button.dataset.productImage === image);
       });
       return;
@@ -2177,6 +2185,21 @@
   }
 
   function initHeaderShortcuts() {
+    var shortcutHtml = [
+      '<a class="rsport-header-action" href="wishlist.html" title="Wishlist" aria-label="Open wishlist"><i class="fa fa-heart" aria-hidden="true"></i><span>Wishlist</span></a>',
+      '<a class="rsport-header-action" href="cart.html" title="Shopping cart" aria-label="Open shopping cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Cart</span></a>'
+    ].join("");
+
+    qsa(".mobile-header-action").forEach(function (mobileActions) {
+      if (!mobileActions.querySelector(".rsport-header-actions")) {
+        var mobileNav = document.createElement("nav");
+        mobileNav.className = "rsport-header-actions rsport-mobile-shortcuts";
+        mobileNav.setAttribute("aria-label", "Shopping shortcuts");
+        mobileNav.innerHTML = shortcutHtml;
+        mobileActions.insertAdjacentElement("afterbegin", mobileNav);
+      }
+    });
+
     qsa(".top_right").forEach(function (topRight) {
       var dropdown = qs(".dropdown_links", topRight);
       if (dropdown && !dropdown.dataset.rsportAccountMenu) {
@@ -2193,10 +2216,7 @@
         var actions = document.createElement("nav");
         actions.className = "rsport-header-actions";
         actions.setAttribute("aria-label", "Shopping shortcuts");
-        actions.innerHTML = [
-          '<a class="rsport-header-action" href="wishlist.html" title="Wishlist" aria-label="Open wishlist"><i class="fa fa-heart" aria-hidden="true"></i><span>Wishlist</span></a>',
-          '<a class="rsport-header-action" href="cart.html" title="Shopping cart" aria-label="Open shopping cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Cart</span></a>'
-        ].join("");
+        actions.innerHTML = shortcutHtml;
         topRight.insertAdjacentElement("afterend", actions);
       }
     });
