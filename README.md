@@ -91,6 +91,26 @@ npm test    # run backend API tests
 npm run check
 ```
 
+## Deploying To Vercel
+
+The repository includes `vercel.json`, which publishes `frontend/` at the site root and routes `/api/*` requests to the Node backend function in `api/server.js`.
+
+1. Import `RafaelBlackwood/SportsStore` in Vercel.
+2. Keep the project Root Directory set to the repository root (`./`).
+3. Leave Framework Preset as `Other`; `vercel.json` sets the output directory.
+4. Add these Production, Preview, and Development environment variables:
+
+```bash
+NODE_ENV=production
+APP_PUBLIC_URL=https://sports-store-kappa.vercel.app
+SESSION_SECRET=replace-with-at-least-32-random-characters
+ALLOW_DEMO_CHECKOUT=true
+```
+
+Use `ALLOW_DEMO_CHECKOUT=false` and add the Stripe variables from the Payment Security section before accepting real payments. After saving the variables, redeploy the latest `main` commit without using the previous build cache.
+
+Vercel Functions only provide temporary writable storage in `/tmp`. The included adapter uses it so the deployed demo can run, but carts, accounts, and orders may reset between function instances or deployments. Connect a durable database such as PostgreSQL before treating the deployment as a production store.
+
 ## License
 
 This project is licensed under the Apache License 2.0. See `LICENSE`.
