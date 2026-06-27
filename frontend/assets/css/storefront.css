@@ -570,16 +570,16 @@ body::after {
 }
 
 .main_menu nav > ul > li > a:hover,
-.main_menu nav > ul > li > a.active,
-.offcanvas_main_menu li a:hover {
-    color: var(--rsport-green) !important;
-    text-shadow: 0 0 16px rgba(44, 246, 211, 0.55);
-}
-
+.main_menu nav > ul > li > a:focus-visible,
 .main_menu nav > ul > li > a.active {
     color: #071018 !important;
     background: linear-gradient(135deg, var(--rsport-green), var(--rsport-lime)) !important;
     text-shadow: none;
+}
+
+.offcanvas_main_menu li a:hover {
+    color: var(--rsport-green) !important;
+    text-shadow: 0 0 16px rgba(44, 246, 211, 0.55);
 }
 
 .search_box input,
