@@ -2877,3 +2877,35 @@ html body .header_top .top_right > ul > li:focus-within > ul.dropdown_links.rspo
     visibility: hidden !important;
     pointer-events: none !important;
 }
+/* Login card containment fix */
+.customer_login .account_form {
+    height: 100%;
+    padding: clamp(22px, 2vw, 30px);
+    box-sizing: border-box;
+}
+
+.customer_login .account_form h2 {
+    margin: 0 0 24px;
+    line-height: 1.2;
+}
+
+.customer_login .account_form form,
+.customer_login .rsport-social-login {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.customer_login .rsport-social-login button {
+    min-width: 0;
+    margin: 0 !important;
+    padding: 12px 14px;
+    line-height: 1.25;
+    white-space: normal;
+}
+
+@media only screen and (max-width: 991px) {
+    .customer_login .rsport-social-login {
+        grid-template-columns: 1fr;
+    }
+}
